@@ -7,19 +7,34 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Security.Cryptography.X509Certificates;
 
-namespace SoundTesting;
+namespace SoundTesting.Views;
 
 public partial class Oscilliator : UserControl
 {
-    
+    public float FrequencySine
+    {
+        get;
+        set;
+    }
+    public float FrequencySquare
+    {
+        get;
+        set;
+    }
+    public float FrequencySaw
+    {
+        get;
+        set;
+    }
+    public float FrequencyTriangle
+    {
+        get;
+        set;
+    }
 
     private Random _Random = new Random();
-    
-    private float _FrequencySine = 440f; 
-    private float _FrequencySquare = 440f; 
-    private float _FrequencySaw = 440f; 
-    private float _FrequencyTriangle = 440f;
 
     private const int sample_rate = 44100; //частота дискретизации, 44,1 г√ц, т.е. на каждую секунду генерируетс€ 44,1 тыс. семплов (амплитуда)
     private const short bits_per_sample = 16; //кол-во бит на семпл, т.е. в каждом из 44,1 тыс. семплов будет 16 бит дл€ хранени€ данных
@@ -27,12 +42,8 @@ public partial class Oscilliator : UserControl
     public Oscilliator()
     {
         InitializeComponent();
+        DataContext = this;
 
-
-        slider_sine.DataContext = _FrequencySine;
-        slider_square.DataContext = _FrequencySquare;
-        slider_sawtooth.DataContext = _FrequencySaw;
-        slider_triangle.DataContext = _FrequencyTriangle;
     }
 
     private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -52,7 +63,7 @@ public partial class Oscilliator : UserControl
         {
             for (int i = 0; i < sample_rate; i++)
             {
-                wave[i] += Convert.ToInt16((short.MaxValue * Math.Sin(((Math.PI * 2 * _FrequencySine) / sample_rate) * i)) / checkboxCount); 
+                wave[i] += Convert.ToInt16((short.MaxValue * Math.Sin(((Math.PI * 2 * FrequencySine) / sample_rate) * i)) / checkboxCount); 
             }
         }
             
@@ -60,13 +71,13 @@ public partial class Oscilliator : UserControl
         {
             for (int i = 0; i < sample_rate; i++)
             {
-                wave[i] += Convert.ToInt16((short.MaxValue * Math.Sign(Math.Sin((Math.PI * 2 * _FrequencySquare) / sample_rate * i))) / checkboxCount);
+                wave[i] += Convert.ToInt16((short.MaxValue * Math.Sign(Math.Sin((Math.PI * 2 * FrequencySquare) / sample_rate * i))) / checkboxCount);
             }
         }
             
         if (chbox_sawtooth.IsChecked == true) //Sawtooth
         {
-            samplesPerWaveLength = (int)(sample_rate / _FrequencySaw);
+            samplesPerWaveLength = (int)(sample_rate / FrequencySaw);
             ampStep = (short)((short.MaxValue * 2) / samplesPerWaveLength);
 
             for (int i = 0; i < sample_rate; i++)
@@ -83,7 +94,7 @@ public partial class Oscilliator : UserControl
             
         if (chbox_triangle.IsChecked == true) //Triangle
         {
-            samplesPerWaveLength = (int)(sample_rate / _FrequencyTriangle);
+            samplesPerWaveLength = (int)(sample_rate / FrequencyTriangle);
             ampStep = (short)((short.MaxValue * 2) / samplesPerWaveLength);
 
             tempSample = -short.MaxValue;
@@ -133,4 +144,6 @@ public partial class Oscilliator : UserControl
                 new SoundPlayer(memoryStream).Play();
 ;           }
     }
+
+    
 }

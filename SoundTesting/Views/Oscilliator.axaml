@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d" MinWidth="480" MinHeight="230"
-	x:Class="SoundTesting.Oscilliator"
+	x:Class="SoundTesting.Views.Oscilliator"
 	x:CompileBindings="False">
 	<Grid
 		Name="grid_oscilliator"
@@ -33,11 +33,11 @@
 				<RotateTransform Angle="270" />
 			</LayoutTransformControl.LayoutTransform>
 			<Slider
-				Name="slider_sine" Value="{Binding}"
-				Minimum="20" Maximum="20000" />
+				Name="slider_sine" Value="{Binding FrequencySine}"
+				Minimum="20" Maximum="20000"/>
 		</LayoutTransformControl>
 		<TextBlock
-			Text="{Binding #slider_sine.Value}"
+			Text="{Binding #slider_sine.Value, StringFormat='{}{0:0.00}'}"
 			HorizontalAlignment="Center"
 			Grid.Row="2" Grid.Column="1"/>
 		<CheckBox
@@ -57,11 +57,11 @@
 				<RotateTransform Angle="270" />
 			</LayoutTransformControl.LayoutTransform>
 			<Slider
-				Name="slider_square" Value="{Binding}"
+				Name="slider_square" Value="{Binding FrequencySquare}"
 				Minimum="20" Maximum="20000" />
 		</LayoutTransformControl>
 		<TextBlock
-			Text="{Binding #slider_square.Value}"
+			Text="{Binding #slider_square.Value, StringFormat='{}{0:0.00}'}"
 			HorizontalAlignment="Center"
 			Grid.Row="2" Grid.Column="2"/>
 		<CheckBox
@@ -81,11 +81,11 @@
 				<RotateTransform Angle="270" />
 			</LayoutTransformControl.LayoutTransform>
 			<Slider
-				Name="slider_sawtooth" Value="{Binding}"
+				Name="slider_sawtooth" Value="{Binding FrequencySaw}"
 				Minimum="20" Maximum="20000" />
 		</LayoutTransformControl>
 		<TextBlock
-			Text="{Binding #slider_sawtooth.Value}"
+			Text="{Binding #slider_sawtooth.Value, StringFormat='{}{0:0.00}'}"
 			HorizontalAlignment="Center"
 			Grid.Row="2" Grid.Column="3"/>
 		<CheckBox
@@ -105,11 +105,11 @@
 				<RotateTransform Angle="270" />
 			</LayoutTransformControl.LayoutTransform>
 			<Slider
-				Name="slider_triangle" Value="{Binding}"
+				Name="slider_triangle" Value="{Binding FrequencyTriangle}"
 				Minimum="20" Maximum="20000" />
 		</LayoutTransformControl>
 		<TextBlock
-			Text="{Binding #slider_triangle.Value}"
+			Text="{Binding #slider_triangle.Value, StringFormat='{}{0:0.00}'}"
 			HorizontalAlignment="Center"
 			Grid.Row="2" Grid.Column="4"/>
 		<CheckBox

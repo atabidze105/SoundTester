@@ -13,8 +13,7 @@ namespace SoundTesting
     public partial class MainWindow : Window
     {
         private AudioRecorder _Recorder = new AudioRecorder();
-        private CustomVoiceTracker _Tracker = new CustomVoiceTracker(1);
-        //private float _Volume = -96;
+        private CustomVoiceTracker _Tracker;
         private bool _isMonitoring = false;
 
         private string[] _Devices = PvRecorder.GetAvailableDevices();
@@ -23,6 +22,8 @@ namespace SoundTesting
             Decoder();
             
             InitializeComponent();
+
+            _Tracker = new CustomVoiceTracker(1);
 
             cbox_microphones.ItemsSource = _Devices;
 

@@ -25,5 +25,5 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/etoch/source/repos/SoundTesting/SoundTesting/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/etoch/source/repos/SoundTesting/SoundTesting/Oscilliator.axaml]
+[C:/Users/etoch/source/repos/SoundTesting/SoundTesting/Views/Oscilliator.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
