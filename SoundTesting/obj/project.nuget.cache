@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gaode1vvrjo=",
+  "dgSpecHash": "/gqlQH+sykQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\SoundTesting.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,7 @@
     "C:\\Users\\etoch\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
+    "C:\\Users\\etoch\\.nuget\\packages\\system.windows.extensions\\9.0.3\\system.windows.extensions.9.0.3.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\tmds.dbus.protocol\\0.20.0\\tmds.dbus.protocol.0.20.0.nupkg.sha512"
   ],
   "logs": []

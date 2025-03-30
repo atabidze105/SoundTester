@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\audiorecorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\audiorecorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\mainwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\mainwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\oscilliator.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\oscilliator.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\customvoicetracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\customvoicetracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|c:\\users\\etoch\\source\\repos\\soundtesting\\soundtesting\\oscilliator.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5803684A-DEDB-4EB0-946B-D22294987E18}|SoundTesting\\SoundTesting.csproj|solutionrelative:soundtesting\\oscilliator.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,23 +34,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AudioRecorder.cs",
               "DocumentMoniker": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\AudioRecorder.cs",
               "RelativeDocumentMoniker": "SoundTesting\\AudioRecorder.cs",
               "ToolTip": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\AudioRecorder.cs",
               "RelativeToolTip": "SoundTesting\\AudioRecorder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-02T18:38:15.012Z"
+              "WhenOpened": "2025-03-30T17:41:48.453Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "Oscilliator.axaml",
+              "DocumentMoniker": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\Oscilliator.axaml",
+              "RelativeDocumentMoniker": "SoundTesting\\Oscilliator.axaml",
+              "ToolTip": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\Oscilliator.axaml",
+              "RelativeToolTip": "SoundTesting\\Oscilliator.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-29T16:07:02.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Oscilliator.axaml.cs",
+              "DocumentMoniker": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\Oscilliator.axaml.cs",
+              "RelativeDocumentMoniker": "SoundTesting\\Oscilliator.axaml.cs",
+              "ToolTip": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\Oscilliator.axaml.cs",
+              "RelativeToolTip": "SoundTesting\\Oscilliator.axaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T16:07:02.375Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MainWindow.axaml",
               "DocumentMoniker": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\MainWindow.axaml",
               "RelativeDocumentMoniker": "SoundTesting\\MainWindow.axaml",
@@ -50,15 +88,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "MainWindow.axaml.cs",
               "DocumentMoniker": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\MainWindow.axaml.cs",
               "RelativeDocumentMoniker": "SoundTesting\\MainWindow.axaml.cs",
               "ToolTip": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\MainWindow.axaml.cs",
               "RelativeToolTip": "SoundTesting\\MainWindow.axaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAAA4wF4AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-02T14:40:32.219Z"
+              "WhenOpened": "2025-03-02T14:40:32.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CustomVoiceTracker.cs",
+              "DocumentMoniker": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\CustomVoiceTracker.cs",
+              "RelativeDocumentMoniker": "SoundTesting\\CustomVoiceTracker.cs",
+              "ToolTip": "C:\\Users\\etoch\\source\\repos\\SoundTesting\\SoundTesting\\CustomVoiceTracker.cs",
+              "RelativeToolTip": "SoundTesting\\CustomVoiceTracker.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwA8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T11:00:21.33Z",
+              "EditorCaption": ""
             }
           ]
         }

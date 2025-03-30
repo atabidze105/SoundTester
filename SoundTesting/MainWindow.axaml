@@ -6,8 +6,10 @@
 	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
 	MinWidth="800" MinHeight="600"
 	x:Class="SoundTesting.MainWindow"
-	Title="SoundTesting">
-	<TabControl>
+	Title="SoundTesting"
+	xmlns:view="clr-namespace:SoundTesting.Oscilliator"
+	x:CompileBindings="False">
+	<TabControl SelectedIndex="0">
 		<TabItem Header="Микрофон">
 			<Grid
 				ShowGridLines="True"
@@ -17,10 +19,28 @@
 					<TextBlock
 						Text="ваши аудиоустройства:"/>
 					<ComboBox
-						Name="cbox_microphones">
+						Name="cbox_microphones" SelectionChanged="ComboBox_SelectionChanged">
 					</ComboBox>
 				</StackPanel>
-				<StackPanel
+				
+				
+				
+				<!--новое-->
+				<StackPanel IsVisible="True" Margin="10"
+					Grid.Column="1" Grid.Row="2">
+					<TextBlock
+						Name="tblock_mic" Text="Выбран микрофон:"/>
+					<ProgressBar 
+						Name="progressbar_volume" 
+						Minimum="-96" Maximum="0" Foreground="{Binding Color}"
+						Value="{Binding DbUpdated}"/>
+					<Button
+						Name="btn_rec"
+						Content="Начать проверку" Click="Button_StartRec"/>
+				</StackPanel>
+				
+				<!--старое-->
+				<StackPanel IsVisible="True"
 					Grid.Column="1" Grid.Row="1">
 					<TextBlock
 						Text="Ожидание..."
@@ -42,7 +62,134 @@
 		</TabItem>
 		<TabItem
 			Header="Колонки">
+			<Grid
+				RowDefinitions="*,*" ShowGridLines="True">
+				<Grid
+					Grid.Row="1" RowDefinitions="*,auto" HorizontalAlignment="Center">
+					
+					
+					
+					<!--<Grid  ShowGridLines="False"
+						ColumnDefinitions="*,*,*,*,*,*"
+						RowDefinitions="*,10*,*,*" Margin="5">
 
+						<Button
+							Name="btn_start"
+							Grid.RowSpan="4">
+							<TextBlock 
+								Text="Начать проверку"
+								TextWrapping="WrapWithOverflow"/>
+						</Button>
+						
+						--><!--Sine--><!--
+						<TextBlock
+							Text="SIN"
+							HorizontalAlignment="Center"
+							 Grid.Column="1"/>
+						<LayoutTransformControl
+							Grid.Row="1" Grid.Column="1">
+							<LayoutTransformControl.LayoutTransform>
+								<RotateTransform Angle="270" />
+							</LayoutTransformControl.LayoutTransform>
+								<Slider 
+									Name="sider_sine"
+									Minimum="0" Maximum="100" TickFrequency="25"
+									IsSnapToTickEnabled="True"/>
+						</LayoutTransformControl>
+						<TextBlock 
+							Text="{Binding #sider_sine.Value}"
+							HorizontalAlignment="Center"
+							Grid.Row="2" Grid.Column="1"/>
+						<CheckBox
+							Name="chbox_sine"
+							Grid.Row="3"  Grid.Column="1"
+							HorizontalAlignment="Center"/>
+
+						--><!--Square--><!--
+						<TextBlock
+							Text="SQR"
+							HorizontalAlignment="Center"
+							Grid.Column="2"/>
+						<LayoutTransformControl
+							 Grid.Column="2" Grid.Row="1">
+							<LayoutTransformControl.LayoutTransform>
+								<RotateTransform Angle="270" />
+							</LayoutTransformControl.LayoutTransform>
+							<Slider
+								Name="sider_square"
+								Minimum="0" Maximum="100" TickFrequency="25"
+								IsSnapToTickEnabled="True"/>
+						</LayoutTransformControl>
+						<TextBlock
+							Text="{Binding #sider_square.Value}"
+							HorizontalAlignment="Center"
+							Grid.Row="2" Grid.Column="2"/>
+						<CheckBox
+							Name="chbox_square"
+							Grid.Row="3" Grid.Column="2"
+							HorizontalAlignment="Center"/>
+						
+						--><!--Sawtooth--><!--
+						<TextBlock
+							Text="SAW"
+							HorizontalAlignment="Center"
+							Grid.Column="3"/>
+						<LayoutTransformControl
+							 Grid.Column="3" Grid.Row="1">
+							<LayoutTransformControl.LayoutTransform>
+								<RotateTransform Angle="270" />
+							</LayoutTransformControl.LayoutTransform>
+							<Slider
+								Name="sider_sawtooth"
+								Minimum="0" Maximum="100" TickFrequency="25"
+								IsSnapToTickEnabled="True"/>
+						</LayoutTransformControl>
+						<TextBlock
+							Text="{Binding #sider_sawtooth.Value}"
+							HorizontalAlignment="Center"
+							Grid.Row="2" Grid.Column="3"/>
+						<CheckBox
+							Name="chbox_sawtooth"
+							Grid.Row="3" Grid.Column="3"
+							HorizontalAlignment="Center"/>
+						
+						--><!--Triangle--><!--
+						<TextBlock
+							Text="TRI"
+							HorizontalAlignment="Center"
+							Grid.Column="4"/>
+						<LayoutTransformControl
+							 Grid.Column="4" Grid.Row="1">
+							<LayoutTransformControl.LayoutTransform>
+								<RotateTransform Angle="270" />
+							</LayoutTransformControl.LayoutTransform>
+							<Slider
+								Name="sider_triangle"
+								Minimum="0" Maximum="100" TickFrequency="25"
+								IsSnapToTickEnabled="True"/>
+						</LayoutTransformControl>
+						<TextBlock
+							Text="{Binding #sider_triangle.Value}"
+							HorizontalAlignment="Center"
+							Grid.Row="2" Grid.Column="4"/>
+						<CheckBox
+							Name="chbox_triangle"
+							Grid.Row="3" Grid.Column="4"
+							HorizontalAlignment="Center"/>
+
+						--><!--White noise--><!--
+						<TextBlock
+							Text="White noice"
+							HorizontalAlignment="Center"
+							Grid.Column="5"/>
+						<CheckBox
+							Name="chbox_whtenoice"
+							Grid.Row="3" Grid.Column="5"
+							HorizontalAlignment="Center"/>
+					</Grid>-->
+				</Grid>
+				
+			</Grid>
 		</TabItem>
 		<TabItem
 			Header="Наушники">

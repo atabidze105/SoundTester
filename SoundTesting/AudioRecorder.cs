@@ -28,14 +28,12 @@ namespace SoundTesting
             writer = new WaveFileWriter(outputFilePath, waveIn.WaveFormat);
 
             waveIn.StartRecording();
-            //Console.WriteLine($"Запись начата с устройства {deviceNumber}...");
         }
 
         // Метод для остановки записи
         public void StopRecording()
         {
-            waveIn.StopRecording();
-            //Console.WriteLine("Запись остановлена.");
+            waveIn?.StopRecording();
         }
 
         // Метод для воспроизведения записанного аудио
@@ -46,7 +44,6 @@ namespace SoundTesting
             {
                 outputDevice.Init(audioFile);
                 outputDevice.Play();
-                //Console.WriteLine("Воспроизведение аудио...");
                 while (outputDevice.PlaybackState == PlaybackState.Playing)
                 {
                     System.Threading.Thread.Sleep(500);

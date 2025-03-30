@@ -16,7 +16,8 @@
           "NAudio": "2.2.1",
           "NAudio.Core": "2.2.1",
           "NAudio.Lame": "2.1.0",
-          "PvRecorder": "1.2.10"
+          "PvRecorder": "1.2.10",
+          "System.Windows.Extensions": "9.0.3"
         },
         "runtime": {
           "SoundTesting.dll": {}
@@ -515,6 +516,22 @@
         }
       },
       "System.Security.Principal.Windows/4.7.0": {},
+      "System.Windows.Extensions/9.0.3": {
+        "runtime": {
+          "lib/net8.0/System.Windows.Extensions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.325.11113"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Windows.Extensions.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.325.11113"
+          }
+        }
+      },
       "Tmds.DBus.Protocol/0.20.0": {
         "dependencies": {
           "System.IO.Pipelines": "8.0.0"
@@ -813,6 +830,13 @@
       "sha512": "sha512-ojD0PX0XhneCsUbAZVKdb7h/70vyYMDYs85lwEI+LngEONe/17A0cFaRFqZU+sOEidcVswYWikYOQ9PPfjlbtQ==",
       "path": "system.security.principal.windows/4.7.0",
       "hashPath": "system.security.principal.windows.4.7.0.nupkg.sha512"
+    },
+    "System.Windows.Extensions/9.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NprFIDXNtYcozulQxOfF0o3z/kq2XRnnip+fpfcqBhfsIjLfIkuEVvwJkFefn5xN3IKfx8+j2RNOyjHnwZ1ZGw==",
+      "path": "system.windows.extensions/9.0.3",
+      "hashPath": "system.windows.extensions.9.0.3.nupkg.sha512"
     },
     "Tmds.DBus.Protocol/0.20.0": {
       "type": "package",

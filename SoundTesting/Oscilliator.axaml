@@ -1,0 +1,130 @@
+<UserControl 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" MinWidth="480" MinHeight="230"
+	x:Class="SoundTesting.Oscilliator"
+	x:CompileBindings="False">
+	<Grid
+		Name="grid_oscilliator"
+		ShowGridLines="False"
+		ColumnDefinitions="*,*,*,*,*,*"
+		RowDefinitions="*,10*,*,*" Margin="5">
+
+		<Button
+			Name="btn_start"
+			Grid.RowSpan="4" HorizontalAlignment="Center"
+			Click="Button_Click">
+			<TextBlock
+				Text="Начать проверку" FontSize="12"
+				TextWrapping="WrapWithOverflow"/>
+		</Button>
+
+		<!--Sine-->
+		<TextBlock
+			Text="SIN"
+			HorizontalAlignment="Center"
+			 Grid.Column="1"/>
+		<LayoutTransformControl
+			HorizontalAlignment="Center"
+			Grid.Row="1" Grid.Column="1">
+			<LayoutTransformControl.LayoutTransform>
+				<RotateTransform Angle="270" />
+			</LayoutTransformControl.LayoutTransform>
+			<Slider
+				Name="slider_sine" Value="{Binding}"
+				Minimum="20" Maximum="20000" />
+		</LayoutTransformControl>
+		<TextBlock
+			Text="{Binding #slider_sine.Value}"
+			HorizontalAlignment="Center"
+			Grid.Row="2" Grid.Column="1"/>
+		<CheckBox
+			Name="chbox_sine"
+			Grid.Row="3"  Grid.Column="1"
+			HorizontalAlignment="Center"/>
+
+		<!--Square-->
+		<TextBlock
+			Text="SQR"
+			HorizontalAlignment="Center"
+			Grid.Column="2"/>
+		<LayoutTransformControl
+			HorizontalAlignment="Center"
+			 Grid.Column="2" Grid.Row="1">
+			<LayoutTransformControl.LayoutTransform>
+				<RotateTransform Angle="270" />
+			</LayoutTransformControl.LayoutTransform>
+			<Slider
+				Name="slider_square" Value="{Binding}"
+				Minimum="20" Maximum="20000" />
+		</LayoutTransformControl>
+		<TextBlock
+			Text="{Binding #slider_square.Value}"
+			HorizontalAlignment="Center"
+			Grid.Row="2" Grid.Column="2"/>
+		<CheckBox
+			Name="chbox_square"
+			Grid.Row="3" Grid.Column="2"
+			HorizontalAlignment="Center"/>
+
+		<!--Sawtooth-->
+		<TextBlock
+			Text="SAW"
+			HorizontalAlignment="Center"
+			Grid.Column="3"/>
+		<LayoutTransformControl
+			HorizontalAlignment="Center"
+			 Grid.Column="3" Grid.Row="1">
+			<LayoutTransformControl.LayoutTransform>
+				<RotateTransform Angle="270" />
+			</LayoutTransformControl.LayoutTransform>
+			<Slider
+				Name="slider_sawtooth" Value="{Binding}"
+				Minimum="20" Maximum="20000" />
+		</LayoutTransformControl>
+		<TextBlock
+			Text="{Binding #slider_sawtooth.Value}"
+			HorizontalAlignment="Center"
+			Grid.Row="2" Grid.Column="3"/>
+		<CheckBox
+			Name="chbox_sawtooth"
+			Grid.Row="3" Grid.Column="3"
+			HorizontalAlignment="Center"/>
+
+		<!--Triangle-->
+		<TextBlock
+			Text="TRI"
+			HorizontalAlignment="Center"
+			Grid.Column="4"/>
+		<LayoutTransformControl
+			HorizontalAlignment="Center"
+			 Grid.Column="4" Grid.Row="1">
+			<LayoutTransformControl.LayoutTransform>
+				<RotateTransform Angle="270" />
+			</LayoutTransformControl.LayoutTransform>
+			<Slider
+				Name="slider_triangle" Value="{Binding}"
+				Minimum="20" Maximum="20000" />
+		</LayoutTransformControl>
+		<TextBlock
+			Text="{Binding #slider_triangle.Value}"
+			HorizontalAlignment="Center"
+			Grid.Row="2" Grid.Column="4"/>
+		<CheckBox
+			Name="chbox_triangle"
+			Grid.Row="3" Grid.Column="4"
+			HorizontalAlignment="Center"/>
+
+		<!--White noise-->
+		<TextBlock
+			Text="White noise"
+			HorizontalAlignment="Center"
+			Grid.Column="5"/>
+		<CheckBox
+			Name="chbox_whtenoise"
+			Grid.Row="3" Grid.Column="5"
+			HorizontalAlignment="Center"/>
+	</Grid>
+</UserControl>
