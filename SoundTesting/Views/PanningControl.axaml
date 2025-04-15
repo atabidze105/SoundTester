@@ -1,0 +1,43 @@
+<UserControl 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" MinWidth="400" MinHeight="150"
+	x:Class="SoundTesting.Views.PanningControl"
+	x:CompileBindings="False">
+	<Grid
+		Margin="5" RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,.2*">
+		<TextBlock
+			Text="Панорамирование:" HorizontalAlignment="Center"/>
+		<TextBlock
+			Text="R" Grid.Row="1" HorizontalAlignment="Right"/>
+		<TextBlock
+			Text="L" Grid.Row="1" HorizontalAlignment="Left"/>
+			<Slider
+				Minimum="-1" Maximum="1" Value="{Binding Panning}"
+				Grid.Row="2"
+				HorizontalAlignment="Stretch" ValueChanged="Slider_PanningChanged"/>
+
+		<StackPanel
+			Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center">
+			<Button
+				Content="Начать проверку"
+				Name="btn_panTest" Click="PanningAudioTest"/>
+		</StackPanel>
+		
+		
+		<ComboBox
+			Grid.Column="1" HorizontalAlignment="Right"
+			Name="cbox_devices">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock
+						TextWrapping="WrapWithOverflow" Text="{Binding Description}">
+					</TextBlock>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+	</Grid>
+</UserControl>
+

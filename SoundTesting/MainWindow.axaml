@@ -12,12 +12,13 @@
 	<TabControl SelectedIndex="0">
 		<TabItem Header="Микрофон">
 			<Grid
-				ShowGridLines="True"
-				RowDefinitions="*,*,*"
+				Margin="5"
+				ShowGridLines="False"
+				RowDefinitions="*,*"
 				ColumnDefinitions="*,*,*">				
 				<StackPanel>
 					<TextBlock
-						Text="ваши аудиоустройства:"/>
+						Text="Доступные устройства:"/>
 					<ComboBox
 						Name="cbox_microphones" SelectionChanged="ComboBox_SelectionChanged">
 					</ComboBox>
@@ -27,7 +28,7 @@
 				
 				<!--новое-->
 				<StackPanel IsVisible="True" Margin="10"
-					Grid.Column="1" Grid.Row="2">
+					Grid.Column="1" Grid.Row="0">
 					<TextBlock
 						Name="tblock_mic" Text="Выбран микрофон:"/>
 					<ProgressBar 
@@ -63,11 +64,13 @@
 		<TabItem
 			Header="Колонки">
 			<Grid
-				RowDefinitions="*,*" ShowGridLines="True">
+				RowDefinitions="*" ShowGridLines="True">
 				<Grid
-					Grid.Row="1" RowDefinitions="*,auto" HorizontalAlignment="Center">
-					
+					Grid.Row="" RowDefinitions="*,auto" HorizontalAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						
 					<view:Oscilliator/>
+					</StackPanel>
 					
 					
 				</Grid>
@@ -76,7 +79,9 @@
 		</TabItem>
 		<TabItem
 			Header="Наушники">
-
+			<Grid>
+				<view:PanningControl VerticalAlignment="Center"/>
+			</Grid>
 		</TabItem>
 	</TabControl>
 </Window>

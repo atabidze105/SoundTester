@@ -117,8 +117,6 @@ public partial class Oscilliator : UserControl
             }
         }
 
-
-
         Buffer.BlockCopy(wave, 0,binaryWave, 0, wave.Length * sizeof(short)); //Конвертация массива short-ов в массив байтов, для записи в WAVE-файл
 
         using (MemoryStream memoryStream = new MemoryStream())
