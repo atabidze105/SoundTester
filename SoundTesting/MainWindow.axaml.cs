@@ -17,6 +17,9 @@ namespace SoundTesting
         private bool _isMonitoring = false;
 
         private string[] _Devices = PvRecorder.GetAvailableDevices();
+
+        
+
         public MainWindow()
         {
             Decoder();
@@ -40,6 +43,7 @@ namespace SoundTesting
             }
         }
 
+        //Отображение децибел
         private void Button_StartRec(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_isMonitoring)

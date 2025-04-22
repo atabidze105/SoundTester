@@ -24,10 +24,12 @@
 					</ComboBox>
 				</StackPanel>
 
-				
-				
+
+
+				<view:VoiceTrackerControl
+					Grid.Column="1" Grid.Row="0" Grid.RowSpan=""/>
 				<!--новое-->
-				<StackPanel IsVisible="True" Margin="10"
+				<StackPanel IsVisible="False" Margin="10"
 					Grid.Column="1" Grid.Row="0">
 					<TextBlock
 						Name="tblock_mic" Text="Выбран микрофон:"/>

@@ -1,0 +1,32 @@
+<UserControl 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+	x:Class="SoundTesting.Views.VoiceTrackerControl"
+	x:CompileBindings="False">
+	<Grid
+		RowDefinitions="auto,auto,auto" ColumnDefinitions="*,auto">
+		<StackPanel
+			Grid.Column="1">
+			<TextBlock
+				Text="Доступные устройства:"/>
+			<ComboBox
+				Name="cbox_microphones" SelectionChanged="ComboBox_SelectionChanged">
+			</ComboBox>
+		</StackPanel>
+
+		<TextBlock
+			Name="tblock_mic" Text="Выбран микрофон:"/>
+		<ProgressBar
+			Name="progressbar_volume"
+			Minimum="-96" Maximum="0" 
+			Value="-96" 
+			Grid.Row="1"/>
+		<Button
+			Name="btn_rec" Grid.Row="2"
+			Content="Начать проверку" Click="Button_StartRec"/>
+		
+	</Grid>
+</UserControl>

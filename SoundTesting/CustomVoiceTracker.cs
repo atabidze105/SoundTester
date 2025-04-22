@@ -16,6 +16,7 @@ namespace SoundTesting
 
         public event Action<float> DbUpdated; // Событие обновления уровня дБ
 
+
         public CustomVoiceTracker(int deviceNumber)
         {
             _waveIn = new WaveInEvent
