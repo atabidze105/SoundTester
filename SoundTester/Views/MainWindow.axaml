@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:SoundTester.ViewModels"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:view="clr-namespace:SoundTester.Views"
+		mc:Ignorable="d" d:DesignWidth="8 00" d:DesignHeight="450"
+		MinHeight="500" MinWidth="500" Height="500" Width="500"
+		WindowStartupLocation="CenterScreen"
+		x:Class="SoundTester.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+		Icon="/Assets/avalonia-logo.ico"
+		Title="SoundTester">
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainWindowViewModel />
+	</Design.DataContext>
+
+	<TabControl>
+		<TabItem Header="Запись">
+			<ContentControl Content="{Binding VoiceTracker }"/>
+		</TabItem>
+
+		<TabItem Header="Воспроизведение">
+			<ContentControl Content="{Binding Oscillator}"/>
+		</TabItem>
+
+		<TabItem Header="Баланс">
+			<ContentControl Content="{Binding PanningPicker}"/>
+		</TabItem>
+	</TabControl>
+</Window>

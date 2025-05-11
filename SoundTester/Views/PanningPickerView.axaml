@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			xmlns:vm="clr-namespace:SoundTester.ViewModels"
+			mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			x:Class="SoundTester.Views.PanningPickerView"
+			x:DataType="vm:PanningPickerViewModel">
+	<StackPanel Spacing="10" Margin="10">
+		<TextBlock TextWrapping="WrapWithOverflow" Text="Для проверки воспроизведения аудио в левом и правом каналах выберите устройтсво из списка доступных устройств, настройте значение смещения через слайдер (R - право, L - лево). После этого нажмите на кнопку &#x22;Начать проверку&#x22;."/>
+
+		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
+			<StackPanel
+				Margin="5" Spacing="10">
+				<StackPanel Spacing="10">
+					<TextBlock Text="Доступные устройства:" />
+					<ComboBox
+						ItemsSource="{Binding Devices}"
+						SelectedItem="{Binding SelectedDevice}" SelectedIndex="{Binding SelectedIndex}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock TextWrapping="WrapWithOverflow" Text="{Binding }" />
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
+				<Grid RowDefinitions="auto,auto,auto,auto">
+					<TextBlock
+						Text="R" Grid.Row="1" HorizontalAlignment="Right" />
+					<TextBlock
+						Text="L" Grid.Row="1" HorizontalAlignment="Left" />
+					<Slider
+						Minimum="-1" Maximum="1" Value="{Binding PanningValue}"
+						Grid.Row="2"
+						HorizontalAlignment="Stretch" />
+					<Button
+						Grid.Row="3" HorizontalAlignment="Center"
+						Content="{Binding PlayButtonContent}" IsEnabled="{Binding IsEnabled}" Command="{Binding PlayCommand}" />
+				</Grid>
+			</StackPanel>
+		</Border>
+	</StackPanel>
+</UserControl>

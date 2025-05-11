@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="SoundTester/App.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/MainWindow.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/OscillaltorItemViev.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/OscillatorItemView.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/OscillatorView.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/PanningPickerView.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/VoiceTrackerView.axaml" value="SoundTester/SoundTester.csproj" />
+        <entry key="SoundTester/Views/VolumePickerView.axaml" value="SoundTester/SoundTester.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			xmlns:vm="clr-namespace:SoundTester.ViewModels"
+			xmlns:v="clr-namespace:SoundTester.Views"
+			mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			x:Class="SoundTester.Views.OscillatorView"
+			x:DataType="vm:OscillatorViewModel">
+	<Grid RowDefinitions="Auto,Auto,*" Margin="5">
+		<TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow"  Text="Для проверки воспроизведения аудио на подключенных аудиостройствах системы выберите доступное устройство из списка и нажмите &#x22;Добавить&#x22;. В список ниже добавится осциллятор, частоту и тип волны которого можно натроить с помощью слайдера и галочек соответсвенно. Вы можете добавить несколько осцилляторов для одного устройства. Также, Вы можете добавить осцилляторы для разных аудиоустройств одновременно. Для произведения проверки нажмите на кнопку &#x22;Начать прослушивание&#x22;."/>
+		<Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Margin="5" Padding="10" CornerRadius="10">
+			<StackPanel Spacing="10">
+				<TextBlock Text="Доступные устройства:" />
+				<ComboBox ItemsSource="{Binding Devices}"
+						SelectedItem="{Binding SelectedDevice}"
+						SelectedIndex="{Binding SelectedDeviceIndex}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding }" />
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+				<StackPanel Orientation="Horizontal" Spacing="5">
+					<Button Content="{Binding PlayButtonText}" Command="{Binding PlayCommand}" IsEnabled="{Binding IsEnabledByCount}" />
+					<Button Content="Добавить" Command="{Binding AddItemCommand}" IsEnabled="{Binding IsEnabled}" />
+					<Button Content="Удалить" Command="{Binding RemoveItemCommand}" IsEnabled="{Binding IsEnabled}" />
+				</StackPanel>
+			</StackPanel>
+		</Border>
+		<ListBox SelectionMode="AlwaysSelected" Grid.Row="2" ItemsSource="{Binding Items}"
+				SelectedItem="{Binding SelectedItem}" Margin="10">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<v:OscillatorItemView></v:OscillatorItemView>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>
