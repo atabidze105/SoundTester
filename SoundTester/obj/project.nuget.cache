@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LuakVwLmYmg=",
+  "dgSpecHash": "T355oG2f6Pw=",
   "success": true,
   "projectFilePath": "C:\\Users\\etoch\\Desktop\\diplom\\SoundTester\\SoundTester\\SoundTester.csproj",
   "expectedPackageFiles": [
@@ -21,7 +21,7 @@
     "C:\\Users\\etoch\\.nuget\\packages\\avalonia.themes.simple\\11.2.1\\avalonia.themes.simple.11.2.1.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\avalonia.win32\\11.2.1\\avalonia.win32.11.2.1.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\avalonia.x11\\11.2.1\\avalonia.x11.11.2.1.nupkg.sha512",
-    "C:\\Users\\etoch\\.nuget\\packages\\dynamicdata\\9.2.2\\dynamicdata.9.2.2.nupkg.sha512",
+    "C:\\Users\\etoch\\.nuget\\packages\\dynamicdata\\8.4.1\\dynamicdata.8.4.1.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\harfbuzzsharp\\7.3.0.2\\harfbuzzsharp.7.3.0.2.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\harfbuzzsharp.nativeassets.linux\\7.3.0.2\\harfbuzzsharp.nativeassets.linux.7.3.0.2.nupkg.sha512",
     "C:\\Users\\etoch\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\7.3.0.2\\harfbuzzsharp.nativeassets.macos.7.3.0.2.nupkg.sha512",

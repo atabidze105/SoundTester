@@ -1,17 +1,19 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using ReactiveUI;
 
 namespace SoundTester.ViewModels;
 
-public class OscillatorItemViewModel : ViewModelBase
+public class OscillatorItemViewModel : ViewModelBase //Осциллятор  (генератор волны)
 {
-    private WaveOutEvent _waveOut;
+    private WasapiOut _waveOut;
     private SignalGenerator _signalGenerator;
     private ISampleProvider _sampleProvider;
-
+    private SignalGeneratorType _typeRef;
     private int _deviceIndex;
     private float _frequency = 20f;
     private bool _sin = true;
@@ -72,8 +74,6 @@ public class OscillatorItemViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _isPlaying, value);
     }
 
-    private SignalGeneratorType _typeRef;
-
     public SignalGeneratorType SGType
     {
         get => SGTypeSelection();
@@ -86,11 +86,9 @@ public class OscillatorItemViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _itemName, value);
     }
 
-    private SignalGeneratorType SGTypeSelection()
+    private SignalGeneratorType SGTypeSelection() //Выбор типа волны в зависимости от булевых знаечний
     {
-        if (Sin)
-            return SignalGeneratorType.Sin;
-        else if (Square)
+        if (Square)
             return SignalGeneratorType.Square;
         else if (Sawtooth)
             return SignalGeneratorType.SawTooth;
@@ -99,11 +97,10 @@ public class OscillatorItemViewModel : ViewModelBase
         else if (Noise)
             return SignalGeneratorType.White;
 
-
         return SignalGeneratorType.Sin;
     }
 
-    public WaveOutEvent WaveOut
+    public WasapiOut WaveOut
     {
         get => _waveOut;
         set => this.RaiseAndSetIfChanged(ref _waveOut, value);
@@ -127,12 +124,14 @@ public class OscillatorItemViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _groupKey, value);
     }
 
-    private void WaveOutInit(int deviceIndex)
+    private void WaveOutInit(string audioDevice) //Инициализация осциллятора
     {
+        var en = new MMDeviceEnumerator(); //костыль
+        var outD = en.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).Where(x => x.FriendlyName == audioDevice).FirstOrDefault();
+        
         WaveOut?.Stop();
         WaveOut?.Dispose();
-        WaveOut = new WaveOutEvent();
-        WaveOut.DeviceNumber = deviceIndex;
+        WaveOut = new WasapiOut(outD,AudioClientShareMode.Shared, false, 50);
 
         SignalGenerator1 = new SignalGenerator();
         SignalGenerator1.Frequency = Frequency;
@@ -143,13 +142,13 @@ public class OscillatorItemViewModel : ViewModelBase
         WaveOut.Init(SampleProvider);
     }
 
-    public OscillatorItemViewModel()
+    public OscillatorItemViewModel() //Конструктор
     {
     }
 
-    public OscillatorItemViewModel(int deviceIndex, string itemName)
+    public OscillatorItemViewModel(string audioDevice) //Конструктор
     {
-        ItemName = itemName;
+        ItemName = audioDevice;
         GroupKey = KeyGen();
 
         this.WhenAnyValue(
@@ -158,16 +157,15 @@ public class OscillatorItemViewModel : ViewModelBase
                 x => x.Square,
                 x => x.Sawtooth,
                 x => x.Triangle,
-                x => x.Noise
-            )
+                x => x.Noise)
             .Subscribe(x =>
             {
                 IsPlaying = false;
-                WaveOutInit(deviceIndex);
+                WaveOutInit(audioDevice);
             });
     }
 
-    private string KeyGen()
+    private string KeyGen() //Генерация уникального ключа для группы радиокнопок
     {
         return Guid.NewGuid().ToString();
     }

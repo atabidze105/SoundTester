@@ -238,3 +238,4 @@ C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\refint\Avalonia
 C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\SoundTes.57F56423.Up2Date
 C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\SoundTester.genruntimeconfig.cache
 C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\ref\SoundTester.dll
+C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\obj\Debug\net9.0\SoundTester.sourcelink.json

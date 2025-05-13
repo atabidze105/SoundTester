@@ -1,10 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia.Controls;
 using Avalonia.Threading;
+using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using ReactiveUI;
 using SoundTesting;
@@ -14,15 +13,16 @@ namespace SoundTester.ViewModels;
 
 public class VoiceTrackerViewModel : ViewModelBase
 {
+    private string _recButtonContent = "Начать проверку";
     private string _selectedDevice;
     private int _selectedDeviceIndex;
     private ObservableCollection<string> _devices;
     private float _volume = -96;
-    private WaveInEvent _waveIn;
-    private WaveOutEvent _waveOut;
     private bool _isMonitoring = false;
     private bool _isEnabled = false;
-    private string _recButtonContent = "Начать проверку";
+    private WasapiCapture _wasapiCapture;
+    private WasapiOut _wasapiOut;
+    private BufferedWaveProvider _bufferedWaveProvider;
     private DevicesEnumerator _devicesEnumerator;
 
     public string SelectedDevice
@@ -63,78 +63,83 @@ public class VoiceTrackerViewModel : ViewModelBase
 
     public ICommand RecordCommand { get; }
     
-
     public VoiceTrackerViewModel(DevicesEnumerator? devicesEnumerator = null) //Конструктор
     {
         _devicesEnumerator = devicesEnumerator ?? Locator.Current.GetService<DevicesEnumerator>()!;
 
         Devices = _devicesEnumerator!.DevicesUpdater.InputDevices;
-
         SelectedDevice = Devices.FirstOrDefault();
-
+        
         RecordCommand = ReactiveCommand.Create(() => Record());
         
-        this.WhenAnyValue(x => x.Devices)
+        this.WhenAnyValue(x => x.Devices, x => x.SelectedDevice)
             .WhereNotNull()
             .Subscribe(x =>
             {
-                SelectedDevice = null!;
-                SelectedDevice = Devices?.FirstOrDefault();
-                ReloadDevices();
+                Devices = _devicesEnumerator.DevicesUpdater.InputDevices;
+                IsEnabled = SelectedDeviceIndex == -1 || Devices.Count == 0 ? false : true;
             });
+        
+        this.WhenAnyValue(x => x.SelectedDeviceIndex).Subscribe(x =>
+        {
+            if (_isMonitoring)
+            {
+                _isMonitoring = false;
+                
+                _wasapiCapture?.StopRecording();
+                _wasapiOut?.Stop();
+                _wasapiCapture?.Dispose();
+                _wasapiOut?.Dispose();
+                
+                RecButtonContent = "Начать проверку";
+                
+                VoiceTrackerInit();
+            }
+        });
+    }
+
+    private void VoiceTrackerInit() //Инициаизация трекера
+    {
+        var en = new MMDeviceEnumerator(); //Костыль
+        var inD = en.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active).Where(x => x.FriendlyName == SelectedDevice).FirstOrDefault();
+        var outD = en.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+        
+            
+        _wasapiCapture = new WasapiCapture(inD, false, 50);
+        _wasapiOut = new WasapiOut(outD, AudioClientShareMode.Shared, false, 50);
+                
+        _wasapiCapture.DataAvailable += OnDataAvailable;
+        
+        _bufferedWaveProvider = new BufferedWaveProvider(_wasapiCapture?.WaveFormat){ DiscardOnBufferOverflow = true };
+        _wasapiOut.Init(_bufferedWaveProvider);
+            
+        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(-96))));
+        
+        en.Dispose();
     }
     
-    private void ReloadDevices() => this.WhenAnyValue(x => x.SelectedDevice)
-        .Subscribe(_ =>
-        {
-            Devices = _devicesEnumerator.DevicesUpdater.InputDevices;
-            IsEnabled = SelectedDeviceIndex == -1 || Devices.Count == 0 ? false : true;
-
-            _waveIn?.StopRecording();
-            _waveOut?.Stop();
-            _waveIn?.Dispose();
-            _waveOut?.Dispose();
-            _waveIn = new()
-            {
-                DeviceNumber = SelectedDeviceIndex,
-                WaveFormat = new WaveFormat(44100, 16, 1),
-                BufferMilliseconds = 50
-            };
-            _waveIn.DataAvailable += OnDataAvailable;
-            
-            Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(-96))));
-            RecButtonContent = "Начать проверку";
-            _isMonitoring = false;
-        });
-
-    
-    private void Record()
+    private void Record() //Запуск/остановка трекера
     {
         if (_isMonitoring)
         {
-            _waveIn?.StopRecording();
-            _waveOut.Stop();
-            RecButtonContent = "Начать проверку";
+            _wasapiCapture?.StopRecording();
+            _wasapiOut.Stop();
             Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(-96))));
+            
+            RecButtonContent = "Начать проверку";
         }
         else
         {
-            var provider = new BufferedWaveProvider(_waveIn?.WaveFormat){ DiscardOnBufferOverflow = true };
-            _waveOut = new WaveOutEvent();
-            _waveOut.Init(provider);
-            _waveIn.DataAvailable += (sender, e) =>
-            {
-                provider.AddSamples(e.Buffer, 0, e.BytesRecorded);
-            };
-            _waveIn?.StartRecording();
-            _waveOut.Play();
-
+            VoiceTrackerInit();
+            
+            _wasapiCapture?.StartRecording();
+            _wasapiOut.Play();
+            
             RecButtonContent = "Остановить проверку";
         }
 
         _isMonitoring = !_isMonitoring;
     }
-
 
     private void OnDataAvailable(object sender, WaveInEventArgs e)
     {
@@ -154,23 +159,13 @@ public class VoiceTrackerViewModel : ViewModelBase
         float rms = (float)Math.Sqrt(sum / samples.Length);
 
         float res = rms > 0 ? 20 * (float)Math.Log10(rms) : -96;
-        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(res))));
+        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(res)))); //Отображение значение дБ в прогрессбаре
+        
+        _bufferedWaveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded); //Добавление данных для мониторинга микрофона
     }
 
     private void RefreshProgressBar(float percentage)
     {
         Volume = percentage;
     }
-
-    // private int GetDeviceIndex(string? deviceName)
-    // {
-    //     
-    //     for (int i = 0; i < WaveInEvent.DeviceCount; i++)
-    //     {
-    //         var caps = WaveInEvent.GetCapabilities(i);
-    //         if (deviceName.Contains(caps.ProductName)) 
-    //             return i;
-    //     }
-    //     return -1;
-    // }
 }

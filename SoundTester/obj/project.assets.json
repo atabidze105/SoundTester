@@ -355,10 +355,10 @@
           }
         }
       },
-      "DynamicData/9.2.2": {
+      "DynamicData/8.4.1": {
         "type": "package",
         "dependencies": {
-          "System.Reactive": "6.0.1"
+          "System.Reactive": "6.0.0"
         },
         "compile": {
           "lib/net8.0/DynamicData.dll": {
@@ -1355,16 +1355,16 @@
         "lib/netstandard2.0/Avalonia.X11.xml"
       ]
     },
-    "DynamicData/9.2.2": {
-      "sha512": "yoEz2lNI6fyhsrArHg1BiiLosYoBeZyvmJQMjlpH6JDXgjW1GcldPF6Bh/X9Azk1EN4iY/XSohkNYuh0QcSKXA==",
+    "DynamicData/8.4.1": {
+      "sha512": "Mn1+fU/jqxgONEJq8KLQPGWEi7g/hUVTbjZyn4QM0sWWDAVOHPO9WjXWORSykwdfg/6S3GM15qsfz+2EvO+QAQ==",
       "type": "package",
-      "path": "dynamicdata/9.2.2",
+      "path": "dynamicdata/8.4.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE/LICENSE",
         "README.md",
-        "dynamicdata.9.2.2.nupkg.sha512",
+        "dynamicdata.8.4.1.nupkg.sha512",
         "dynamicdata.nuspec",
         "lib/net462/DynamicData.dll",
         "lib/net462/DynamicData.xml",
@@ -2313,7 +2313,6 @@
       "Avalonia.Fonts.Inter >= 11.2.1",
       "Avalonia.ReactiveUI >= 11.2.1",
       "Avalonia.Themes.Fluent >= 11.2.1",
-      "DynamicData >= 9.2.2",
       "Microsoft.Extensions.DependencyInjection >= 9.0.4",
       "NAudio >= 2.2.1",
       "Splat.Microsoft.Extensions.DependencyInjection >= 15.3.1"
@@ -2387,10 +2386,6 @@
           "Avalonia.Themes.Fluent": {
             "target": "Package",
             "version": "[11.2.1, )"
-          },
-          "DynamicData": {
-            "target": "Package",
-            "version": "[9.2.2, )"
           },
           "Microsoft.Extensions.DependencyInjection": {
             "target": "Package",

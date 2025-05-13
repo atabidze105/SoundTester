@@ -14,7 +14,6 @@
           "Avalonia.Fonts.Inter": "11.2.1",
           "Avalonia.ReactiveUI": "11.2.1",
           "Avalonia.Themes.Fluent": "11.2.1",
-          "DynamicData": "9.2.2",
           "Microsoft.Extensions.DependencyInjection": "9.0.4",
           "NAudio": "2.2.1",
           "Splat.Microsoft.Extensions.DependencyInjection": "15.3.1"
@@ -275,14 +274,14 @@
           }
         }
       },
-      "DynamicData/9.2.2": {
+      "DynamicData/8.4.1": {
         "dependencies": {
           "System.Reactive": "6.0.1"
         },
         "runtime": {
           "lib/net8.0/DynamicData.dll": {
-            "assemblyVersion": "9.2.0.0",
-            "fileVersion": "9.2.2.25193"
+            "assemblyVersion": "8.4.0.0",
+            "fileVersion": "8.4.1.20756"
           }
         }
       },
@@ -459,7 +458,7 @@
       },
       "ReactiveUI/20.1.1": {
         "dependencies": {
-          "DynamicData": "9.2.2",
+          "DynamicData": "8.4.1",
           "Splat": "15.3.1",
           "System.ComponentModel.Annotations": "5.0.0"
         },
@@ -713,12 +712,12 @@
       "path": "avalonia.x11/11.2.1",
       "hashPath": "avalonia.x11.11.2.1.nupkg.sha512"
     },
-    "DynamicData/9.2.2": {
+    "DynamicData/8.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-yoEz2lNI6fyhsrArHg1BiiLosYoBeZyvmJQMjlpH6JDXgjW1GcldPF6Bh/X9Azk1EN4iY/XSohkNYuh0QcSKXA==",
-      "path": "dynamicdata/9.2.2",
-      "hashPath": "dynamicdata.9.2.2.nupkg.sha512"
+      "sha512": "sha512-Mn1+fU/jqxgONEJq8KLQPGWEi7g/hUVTbjZyn4QM0sWWDAVOHPO9WjXWORSykwdfg/6S3GM15qsfz+2EvO+QAQ==",
+      "path": "dynamicdata/8.4.1",
+      "hashPath": "dynamicdata.8.4.1.nupkg.sha512"
     },
     "HarfBuzzSharp/7.3.0.2": {
       "type": "package",

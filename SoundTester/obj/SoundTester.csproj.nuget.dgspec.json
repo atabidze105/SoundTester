@@ -70,10 +70,6 @@
               "target": "Package",
               "version": "[11.2.1, )"
             },
-            "DynamicData": {
-              "target": "Package",
-              "version": "[9.2.2, )"
-            },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
               "version": "[9.0.4, )"

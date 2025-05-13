@@ -8,19 +8,19 @@ using Splat;
 
 namespace SoundTester.ViewModels;
 
-public class OscillatorViewModel : ViewModelBase
+public class OscillatorViewModel : ViewModelBase //Менеджер осцилляторов (генераторов волн)
 {
+    private string _playButtonText = "Начать прослушивание";
     private string _selectedDevice;
     private int _selectedDeviceIndex;
     private ObservableCollection<string> _devices;
-    private string _playButtonText = "Начать прослушивание";
-    private bool _isPlaying = false;
     private ObservableCollection<OscillatorItemViewModel> _items;
+    private bool _isPlaying = false;
     private bool _isItemSelected = false;
     private bool _isEnabled = false;
     private bool _isEnabledByCount = false;
-    private DevicesEnumerator _devicesEnumerator;
     private OscillatorItemViewModel _selectedItem;
+    private DevicesEnumerator _devicesEnumerator;
 
 
     public string SelectedDevice
@@ -89,19 +89,19 @@ public class OscillatorViewModel : ViewModelBase
 
     public ICommand RemoveItemCommand { get; }
 
-    public OscillatorViewModel(DevicesEnumerator? devicesEnumerator = null)
+    public OscillatorViewModel(DevicesEnumerator? devicesEnumerator = null) //Конструктор
     {
-        PlayCommand = ReactiveCommand.Create(() => Play());
-        AddItemCommand = ReactiveCommand.Create(() => AddItem());
-        RemoveItemCommand = ReactiveCommand.Create(() => RemoveItem());
-
-        Items = new ObservableCollection<OscillatorItemViewModel>();
         _devicesEnumerator = devicesEnumerator ?? Locator.Current.GetService<DevicesEnumerator>()!;
 
         Devices = _devicesEnumerator!.DevicesUpdater.InputDevices;
 
         SelectedDevice = Devices.FirstOrDefault();
+        
+        Items = new ObservableCollection<OscillatorItemViewModel>();
 
+        PlayCommand = ReactiveCommand.Create(() => Play());
+        AddItemCommand = ReactiveCommand.Create(() => AddItem());
+        RemoveItemCommand = ReactiveCommand.Create(() => RemoveItem());
 
         this.WhenAnyValue(x => x.Devices)
             .WhereNotNull().Subscribe(x =>
@@ -123,12 +123,11 @@ public class OscillatorViewModel : ViewModelBase
                 item.WaveOut.Stop();
                 item.IsPlaying = false;
             }
-
             Items.Clear();
         });
     }
 
-    private void Play()
+    private void Play() //Запуск/остановка осцилляторов
     {
         if (_isPlaying!)
         {
@@ -148,36 +147,45 @@ public class OscillatorViewModel : ViewModelBase
                 item.IsPlaying = true;
             }
         }
-
         _isPlaying = !_isPlaying;
     }
 
-    private void AddItem()
+    private void AddItem() //Добавление нового осциллятора
     {
-        foreach (var item in Items)
+        if (Items.Count < 10)
         {
-            item.WaveOut.Stop();
-            item.IsPlaying = false;
-        }
-
-        IsPlaying = false;
-        PlayButtonText = "Начать прослушивание";
-
-        OscillatorItemViewModel oscillatorItem = new OscillatorItemViewModel(SelectedDeviceIndex, SelectedDevice);
-        Items.Add(oscillatorItem);
-
-        foreach (var ite in Items)
-        {
-            ite.WhenAnyValue(x => x.Frequency).Subscribe(x =>
+            foreach (var item in Items)
             {
-                ite.WaveOut?.Stop();
-                ite.IsPlaying = false;
-                PlayButtonText = "Начать прослушивание";
-            });
+                item.WaveOut.Stop();
+                item.IsPlaying = false;
+            }
+            
+            IsPlaying = false;
+            PlayButtonText = "Начать прослушивание";
+            
+            OscillatorItemViewModel oscillatorItem = new OscillatorItemViewModel(SelectedDevice);
+            Items.Add(oscillatorItem);
+            
+            foreach (var ite in Items)
+            {
+                ite.WhenAnyValue(
+                    x => x.Frequency, 
+                    x => x.Sin,
+                    x => x.Square,
+                    x => x.Triangle,
+                    x => x.Sawtooth,
+                    x => x.Noise).Subscribe(x =>
+                {
+                    ite.WaveOut?.Stop();
+                    ite.IsPlaying = false;
+                    PlayButtonText = "Начать прослушивание";
+                });
+            }
         }
+        
     }
 
-    private void RemoveItem()
+    private void RemoveItem() //Удаление выбранного осциллятора
     {
         if (SelectedItem != null)
         {
