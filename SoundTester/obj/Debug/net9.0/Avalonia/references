@@ -24,7 +24,11 @@ C:\Users\etoch\.nuget\packages\avalonia\11.2.1\ref\net8.0\Avalonia.Vulkan.dll
 C:\Users\etoch\.nuget\packages\avalonia.win32\11.2.1\lib\net8.0\Avalonia.Win32.dll
 C:\Users\etoch\.nuget\packages\avalonia.x11\11.2.1\lib\net8.0\Avalonia.X11.dll
 C:\Users\etoch\.nuget\packages\dynamicdata\8.4.1\lib\net8.0\DynamicData.dll
-C:\Users\etoch\.nuget\packages\harfbuzzsharp\7.3.0.2\lib\net6.0\HarfBuzzSharp.dll
+C:\Users\etoch\.nuget\packages\fftsharp\2.2.0\lib\net8.0\FftSharp.dll
+C:\Users\etoch\.nuget\packages\harfbuzzsharp\7.3.0.3\lib\net6.0\HarfBuzzSharp.dll
+C:\Users\etoch\.nuget\packages\livechartscore\2.0.0-rc5.4\lib\net8.0\LiveChartsCore.dll
+C:\Users\etoch\.nuget\packages\livechartscore.skiasharpview.avalonia\2.0.0-rc5.4\lib\net8.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
+C:\Users\etoch\.nuget\packages\livechartscore.skiasharpview\2.0.0-rc5.4\lib\net8.0\LiveChartsCore.SkiaSharpView.dll
 C:\Users\etoch\.nuget\packages\microcom.runtime\0.11.0\lib\net5.0\MicroCom.Runtime.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.4\ref\net9.0\Microsoft.CSharp.dll
 C:\Users\etoch\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\9.0.4\lib\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
@@ -42,7 +46,8 @@ C:\Users\etoch\.nuget\packages\naudio.wasapi\2.2.1\lib\netstandard2.0\NAudio.Was
 C:\Users\etoch\.nuget\packages\naudio.winmm\2.2.1\lib\netstandard2.0\NAudio.WinMM.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.4\ref\net9.0\netstandard.dll
 C:\Users\etoch\.nuget\packages\reactiveui\20.1.1\lib\net8.0\ReactiveUI.dll
-C:\Users\etoch\.nuget\packages\skiasharp\2.88.8\lib\net6.0\SkiaSharp.dll
+C:\Users\etoch\.nuget\packages\skiasharp\2.88.9\lib\net6.0\SkiaSharp.dll
+C:\Users\etoch\.nuget\packages\skiasharp.harfbuzz\2.88.9\lib\net6.0\SkiaSharp.HarfBuzz.dll
 C:\Users\etoch\.nuget\packages\splat\15.3.1\lib\net9.0\Splat.dll
 C:\Users\etoch\.nuget\packages\splat.microsoft.extensions.dependencyinjection\15.3.1\lib\net9.0\Splat.Microsoft.Extensions.DependencyInjection.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.4\ref\net9.0\System.AppContext.dll

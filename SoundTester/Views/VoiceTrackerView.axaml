@@ -3,6 +3,7 @@
 			xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			xmlns:vm="clr-namespace:SoundTester.ViewModels"
+			xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 			mc:Ignorable="d"
 			x:Class="SoundTester.Views.VoiceTrackerView"
 			x:DataType="vm:VoiceTrackerViewModel">
@@ -25,10 +26,22 @@
 
 				<TextBlock Text="{Binding SelectedDevice,StringFormat='{}Выбран микрофон: {0}'}" />
 
-				<ProgressBar Minimum="-96" Maximum="0" Value="{Binding Volume}" />
+				<ProgressBar Minimum="0" Maximum="1" Value="{Binding Volume}" />
 
 				<Button Content="{Binding RecButtonContent}" Command="{Binding RecordCommand}" IsEnabled="{Binding IsEnabled}" />
 			</StackPanel>
+		</Border>
+		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
+			<lvc:CartesianChart
+				Series="{Binding SeriesMagnitudes}"
+				XAxes="{Binding XAxisMagnitudes}"
+				YAxes="{Binding YAxisMagnitudes}"
+				Height="200" ZoomMode="Both" />
+		</Border>
+		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
+			<lvc:CartesianChart
+				Series="{Binding MySeries}"
+				Height="200" ZoomMode="Both" />
 		</Border>
 	</StackPanel>
 

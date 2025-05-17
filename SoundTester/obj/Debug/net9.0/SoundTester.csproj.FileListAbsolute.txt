@@ -239,3 +239,8 @@ C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\SoundTes.57F564
 C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\SoundTester.genruntimeconfig.cache
 C:\Users\sada\Documents\SoundTester\SoundTester\obj\Debug\net9.0\ref\SoundTester.dll
 C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\obj\Debug\net9.0\SoundTester.sourcelink.json
+C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\LiveChartsCore.dll
+C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.dll
+C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
+C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\SkiaSharp.HarfBuzz.dll
+C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\FftSharp.dll

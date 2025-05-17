@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:view="clr-namespace:SoundTester.Views"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		MinHeight="550" MinWidth="500" Height="550" Width="500"
+		MinHeight="800" MinWidth="500" Height="550" Width="500"
 		WindowStartupLocation="CenterScreen"
 		x:Class="SoundTester.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"

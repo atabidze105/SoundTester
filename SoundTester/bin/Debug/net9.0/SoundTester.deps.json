@@ -14,6 +14,8 @@
           "Avalonia.Fonts.Inter": "11.2.1",
           "Avalonia.ReactiveUI": "11.2.1",
           "Avalonia.Themes.Fluent": "11.2.1",
+          "FftSharp": "2.2.0",
+          "LiveChartsCore.SkiaSharpView.Avalonia": "2.0.0-rc5.4",
           "Microsoft.Extensions.DependencyInjection": "9.0.4",
           "NAudio": "2.2.1",
           "Splat.Microsoft.Extensions.DependencyInjection": "15.3.1"
@@ -213,10 +215,10 @@
       "Avalonia.Skia/11.2.1": {
         "dependencies": {
           "Avalonia": "11.2.1",
-          "HarfBuzzSharp": "7.3.0.2",
+          "HarfBuzzSharp": "7.3.0.3",
           "HarfBuzzSharp.NativeAssets.Linux": "7.3.0.2",
           "HarfBuzzSharp.NativeAssets.WebAssembly": "7.3.0.3-preview.2.2",
-          "SkiaSharp": "2.88.8",
+          "SkiaSharp": "2.88.9",
           "SkiaSharp.NativeAssets.Linux": "2.88.8",
           "SkiaSharp.NativeAssets.WebAssembly": "2.88.8"
         },
@@ -285,21 +287,29 @@
           }
         }
       },
-      "HarfBuzzSharp/7.3.0.2": {
+      "FftSharp/2.2.0": {
+        "runtime": {
+          "lib/net8.0/FftSharp.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        }
+      },
+      "HarfBuzzSharp/7.3.0.3": {
         "dependencies": {
-          "HarfBuzzSharp.NativeAssets.Win32": "7.3.0.2",
-          "HarfBuzzSharp.NativeAssets.macOS": "7.3.0.2"
+          "HarfBuzzSharp.NativeAssets.Win32": "7.3.0.3",
+          "HarfBuzzSharp.NativeAssets.macOS": "7.3.0.3"
         },
         "runtime": {
           "lib/net6.0/HarfBuzzSharp.dll": {
             "assemblyVersion": "1.0.0.0",
-            "fileVersion": "7.3.0.2"
+            "fileVersion": "7.3.0.3"
           }
         }
       },
       "HarfBuzzSharp.NativeAssets.Linux/7.3.0.2": {
         "dependencies": {
-          "HarfBuzzSharp": "7.3.0.2"
+          "HarfBuzzSharp": "7.3.0.3"
         },
         "runtimeTargets": {
           "runtimes/linux-arm/native/libHarfBuzzSharp.so": {
@@ -324,7 +334,7 @@
           }
         }
       },
-      "HarfBuzzSharp.NativeAssets.macOS/7.3.0.2": {
+      "HarfBuzzSharp.NativeAssets.macOS/7.3.0.3": {
         "runtimeTargets": {
           "runtimes/osx/native/libHarfBuzzSharp.dylib": {
             "rid": "osx",
@@ -334,7 +344,7 @@
         }
       },
       "HarfBuzzSharp.NativeAssets.WebAssembly/7.3.0.3-preview.2.2": {},
-      "HarfBuzzSharp.NativeAssets.Win32/7.3.0.2": {
+      "HarfBuzzSharp.NativeAssets.Win32/7.3.0.3": {
         "runtimeTargets": {
           "runtimes/win-arm64/native/libHarfBuzzSharp.dll": {
             "rid": "win-arm64",
@@ -350,6 +360,40 @@
             "rid": "win-x86",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "LiveChartsCore/2.0.0-rc5.4": {
+        "runtime": {
+          "lib/net8.0/LiveChartsCore.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "LiveChartsCore.SkiaSharpView/2.0.0-rc5.4": {
+        "dependencies": {
+          "LiveChartsCore": "2.0.0-rc5.4",
+          "SkiaSharp": "2.88.9",
+          "SkiaSharp.HarfBuzz": "2.88.9"
+        },
+        "runtime": {
+          "lib/net8.0/LiveChartsCore.SkiaSharpView.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "LiveChartsCore.SkiaSharpView.Avalonia/2.0.0-rc5.4": {
+        "dependencies": {
+          "Avalonia": "11.2.1",
+          "Avalonia.Skia": "11.2.1",
+          "LiveChartsCore.SkiaSharpView": "2.0.0-rc5.4"
+        },
+        "runtime": {
+          "lib/net8.0/LiveChartsCore.SkiaSharpView.Avalonia.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
           }
         }
       },
@@ -469,21 +513,33 @@
           }
         }
       },
-      "SkiaSharp/2.88.8": {
+      "SkiaSharp/2.88.9": {
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "2.88.8",
-          "SkiaSharp.NativeAssets.macOS": "2.88.8"
+          "SkiaSharp.NativeAssets.Win32": "2.88.9",
+          "SkiaSharp.NativeAssets.macOS": "2.88.9"
         },
         "runtime": {
           "lib/net6.0/SkiaSharp.dll": {
             "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.8.0"
+            "fileVersion": "2.88.9.0"
+          }
+        }
+      },
+      "SkiaSharp.HarfBuzz/2.88.9": {
+        "dependencies": {
+          "HarfBuzzSharp": "7.3.0.3",
+          "SkiaSharp": "2.88.9"
+        },
+        "runtime": {
+          "lib/net6.0/SkiaSharp.HarfBuzz.dll": {
+            "assemblyVersion": "2.88.0.0",
+            "fileVersion": "2.88.9.0"
           }
         }
       },
       "SkiaSharp.NativeAssets.Linux/2.88.8": {
         "dependencies": {
-          "SkiaSharp": "2.88.8"
+          "SkiaSharp": "2.88.9"
         },
         "runtimeTargets": {
           "runtimes/linux-arm/native/libSkiaSharp.so": {
@@ -508,7 +564,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.macOS/2.88.8": {
+      "SkiaSharp.NativeAssets.macOS/2.88.9": {
         "runtimeTargets": {
           "runtimes/osx/native/libSkiaSharp.dylib": {
             "rid": "osx",
@@ -518,7 +574,7 @@
         }
       },
       "SkiaSharp.NativeAssets.WebAssembly/2.88.8": {},
-      "SkiaSharp.NativeAssets.Win32/2.88.8": {
+      "SkiaSharp.NativeAssets.Win32/2.88.9": {
         "runtimeTargets": {
           "runtimes/win-arm64/native/libSkiaSharp.dll": {
             "rid": "win-arm64",
@@ -719,12 +775,19 @@
       "path": "dynamicdata/8.4.1",
       "hashPath": "dynamicdata.8.4.1.nupkg.sha512"
     },
-    "HarfBuzzSharp/7.3.0.2": {
+    "FftSharp/2.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0tCd6HyCmNsX/DniCp2b00fo0xPbdNwKOs9BxxyT8oOOuMlWjcSFwzONKyeckCKVBFEsbSmsAHPDTqxoSDwZMg==",
-      "path": "harfbuzzsharp/7.3.0.2",
-      "hashPath": "harfbuzzsharp.7.3.0.2.nupkg.sha512"
+      "sha512": "sha512-TMdujVhp5qPCo8qABBxWJAS+sUFHR7XBX1U/v9l9vDosx8CqKWTttW4fpetroTGrqOfq/jRBRi8zthpoe7a+Qg==",
+      "path": "fftsharp/2.2.0",
+      "hashPath": "fftsharp.2.2.0.nupkg.sha512"
+    },
+    "HarfBuzzSharp/7.3.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Hq+5+gx10coOvuRgB13KBwiWxJq1QeYuhtVLbA01ZCWaugOnolUahF44KvrQTUUHDNk/C7HB6SMaebsZeOdhgg==",
+      "path": "harfbuzzsharp/7.3.0.3",
+      "hashPath": "harfbuzzsharp.7.3.0.3.nupkg.sha512"
     },
     "HarfBuzzSharp.NativeAssets.Linux/7.3.0.2": {
       "type": "package",
@@ -733,12 +796,12 @@
       "path": "harfbuzzsharp.nativeassets.linux/7.3.0.2",
       "hashPath": "harfbuzzsharp.nativeassets.linux.7.3.0.2.nupkg.sha512"
     },
-    "HarfBuzzSharp.NativeAssets.macOS/7.3.0.2": {
+    "HarfBuzzSharp.NativeAssets.macOS/7.3.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nycYH/WLJ6ogm+I+QSFCdPJsdxSb5GANWYbQyp1vsd/KjXN56RVUJWPhbgP2GKb/Y7mrsHM7EProqVXlO/EMsA==",
-      "path": "harfbuzzsharp.nativeassets.macos/7.3.0.2",
-      "hashPath": "harfbuzzsharp.nativeassets.macos.7.3.0.2.nupkg.sha512"
+      "sha512": "sha512-UAwIYnkbBTzBJv1Id8FijY/i8QiIepRemSXufU8fyzwWhYJdx4+ajG8yQUie5HW/uusbVLFSr26muSlJOFDgSw==",
+      "path": "harfbuzzsharp.nativeassets.macos/7.3.0.3",
+      "hashPath": "harfbuzzsharp.nativeassets.macos.7.3.0.3.nupkg.sha512"
     },
     "HarfBuzzSharp.NativeAssets.WebAssembly/7.3.0.3-preview.2.2": {
       "type": "package",
@@ -747,12 +810,33 @@
       "path": "harfbuzzsharp.nativeassets.webassembly/7.3.0.3-preview.2.2",
       "hashPath": "harfbuzzsharp.nativeassets.webassembly.7.3.0.3-preview.2.2.nupkg.sha512"
     },
-    "HarfBuzzSharp.NativeAssets.Win32/7.3.0.2": {
+    "HarfBuzzSharp.NativeAssets.Win32/7.3.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DpF9JBzwws2dupOLnjME65hxQWWbN/GD40AoTkwB4S05WANvxo3n81AnQJKxWDCnrWfWhLPB36OF27TvEqzb/A==",
-      "path": "harfbuzzsharp.nativeassets.win32/7.3.0.2",
-      "hashPath": "harfbuzzsharp.nativeassets.win32.7.3.0.2.nupkg.sha512"
+      "sha512": "sha512-RPxRXD16KtSs8Yxr2RK9Qs7AwyN9MlpqZIYs0AvfaJwl7RAtVhC0+u2f2SKwX0uMYYd3O98Z+OBA1sj6aWVKQA==",
+      "path": "harfbuzzsharp.nativeassets.win32/7.3.0.3",
+      "hashPath": "harfbuzzsharp.nativeassets.win32.7.3.0.3.nupkg.sha512"
+    },
+    "LiveChartsCore/2.0.0-rc5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1hEEvMndEP5urodx+Epu2lwvJr0ZG246FR7jMYtE9/snYwbUKoItq6a4cTzyeyFPi9fcBsjtgwAWA8uL/2s73g==",
+      "path": "livechartscore/2.0.0-rc5.4",
+      "hashPath": "livechartscore.2.0.0-rc5.4.nupkg.sha512"
+    },
+    "LiveChartsCore.SkiaSharpView/2.0.0-rc5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lpylapUJHvAagM4pmcwCvx3ObfL2FlITtI0u8LkKlLEnzhJYg17Tcxcgd6R/mItQlCdICG0PFDVNUDnZEwhFuw==",
+      "path": "livechartscore.skiasharpview/2.0.0-rc5.4",
+      "hashPath": "livechartscore.skiasharpview.2.0.0-rc5.4.nupkg.sha512"
+    },
+    "LiveChartsCore.SkiaSharpView.Avalonia/2.0.0-rc5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UF+zsd6964W5hW/e/y+1wX2X+Txj3NCIFZquMx6uFvDaz0QdMWJdhJZjN26zgmgrIKRTVocC0yu1Klg/HSVYuQ==",
+      "path": "livechartscore.skiasharpview.avalonia/2.0.0-rc5.4",
+      "hashPath": "livechartscore.skiasharpview.avalonia.2.0.0-rc5.4.nupkg.sha512"
     },
     "MicroCom.Runtime/0.11.0": {
       "type": "package",
@@ -838,12 +922,19 @@
       "path": "reactiveui/20.1.1",
       "hashPath": "reactiveui.20.1.1.nupkg.sha512"
     },
-    "SkiaSharp/2.88.8": {
+    "SkiaSharp/2.88.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-bRkp3uKp5ZI8gXYQT57uKwil1uobb2p8c69n7v5evlB/2JNcMAXVcw9DZAP5Ig3WSvgzGm2YSn27UVeOi05NlA==",
-      "path": "skiasharp/2.88.8",
-      "hashPath": "skiasharp.2.88.8.nupkg.sha512"
+      "sha512": "sha512-3MD5VHjXXieSHCleRLuaTXmL2pD0mB7CcOB1x2kA1I4bhptf4e3R27iM93264ZYuAq6mkUyX5XbcxnZvMJYc1Q==",
+      "path": "skiasharp/2.88.9",
+      "hashPath": "skiasharp.2.88.9.nupkg.sha512"
+    },
+    "SkiaSharp.HarfBuzz/2.88.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5lyjX04CSWTKFYMSNN6SMupV2qzYDr8W/u8S3ZEkr+Sg3kOi0YE06EOqG0tzn/YPBID89xam4L3rz3hUUKOGEQ==",
+      "path": "skiasharp.harfbuzz/2.88.9",
+      "hashPath": "skiasharp.harfbuzz.2.88.9.nupkg.sha512"
     },
     "SkiaSharp.NativeAssets.Linux/2.88.8": {
       "type": "package",
@@ -852,12 +943,12 @@
       "path": "skiasharp.nativeassets.linux/2.88.8",
       "hashPath": "skiasharp.nativeassets.linux.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.NativeAssets.macOS/2.88.8": {
+    "SkiaSharp.NativeAssets.macOS/2.88.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-6Kn5TSkKlfyS6azWHF3Jk2sW5C4jCE5uSshM/5AbfFrR+5n6qM5XEnz9h4VaVl7LTxBvHvMkuPb/3bpbq0vxTw==",
-      "path": "skiasharp.nativeassets.macos/2.88.8",
-      "hashPath": "skiasharp.nativeassets.macos.2.88.8.nupkg.sha512"
+      "sha512": "sha512-Nv5spmKc4505Ep7oUoJ5vp3KweFpeNqxpyGDWyeEPTX2uR6S6syXIm3gj75dM0YJz7NPvcix48mR5laqs8dPuA==",
+      "path": "skiasharp.nativeassets.macos/2.88.9",
+      "hashPath": "skiasharp.nativeassets.macos.2.88.9.nupkg.sha512"
     },
     "SkiaSharp.NativeAssets.WebAssembly/2.88.8": {
       "type": "package",
@@ -866,12 +957,12 @@
       "path": "skiasharp.nativeassets.webassembly/2.88.8",
       "hashPath": "skiasharp.nativeassets.webassembly.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.NativeAssets.Win32/2.88.8": {
+    "SkiaSharp.NativeAssets.Win32/2.88.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-O9QXoWEXA+6cweR4h3BOnwMz+pO9vL9mXdjLrpDd0w1QzCgWmLQBxa1VgySDITiH7nQndrDG1h6937zm9pLj1Q==",
-      "path": "skiasharp.nativeassets.win32/2.88.8",
-      "hashPath": "skiasharp.nativeassets.win32.2.88.8.nupkg.sha512"
+      "sha512": "sha512-wb2kYgU7iy84nQLYZwMeJXixvK++GoIuECjU4ECaUKNuflyRlJKyiRhN1MAHswvlvzuvkrjRWlK0Za6+kYQK7w==",
+      "path": "skiasharp.nativeassets.win32/2.88.9",
+      "hashPath": "skiasharp.nativeassets.win32.2.88.9.nupkg.sha512"
     },
     "Splat/15.3.1": {
       "type": "package",
