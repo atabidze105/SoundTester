@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoundTester")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a258f7b50f0084466899457311a86a90f742e472")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9a4a7304b7fe121b913648ce0b26d44b1a977ce")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoundTester")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoundTester")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

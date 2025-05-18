@@ -6,6 +6,8 @@ using System.Windows.Input;
 using Avalonia.Threading;
 using DynamicData;
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using NAudio.CoreAudioApi;
@@ -34,12 +36,11 @@ public class VoiceTrackerViewModel : ViewModelBase
     private DevicesEnumerator _devicesEnumerator;
     
     private IEnumerable<ISeries> _seriesMagnitudes;
-    private IEnumerable<ISeries> _seriesFrequences;
     private ObservableCollection<float> _magnitudes = new ObservableCollection<float>();
-    private ObservableCollection<float> _frequences = new ObservableCollection<float>();
     
-    public ObservableCollection<ISeries> MySeries { get; } = new ObservableCollection<ISeries>();
-    
+    private readonly List<AudioPoint> _tempBuffer = new(); // Временный буфер
+    private readonly object _syncLock = new(); //чтобы одновременно не происходили чтение и чистка/запись в _tempBuffer
+
     
 
     public string SelectedDevice
@@ -86,63 +87,24 @@ public class VoiceTrackerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _seriesMagnitudes, value);
     }
     
-    public IEnumerable<ISeries> SeriesFrequences
-    {
-        get => _seriesFrequences;
-        set => this.RaiseAndSetIfChanged(ref _seriesFrequences, value);
-    }
-
     public ObservableCollection<float> Magnitudes
     {
         get => _magnitudes;
         set => this.RaiseAndSetIfChanged(ref _magnitudes, value);
     }
-
-    public ObservableCollection<float> Frequences
-    {
-        get => _frequences;
-        set => this.RaiseAndSetIfChanged(ref _frequences, value);
-    }
     
     public Axis[] XAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Частота (Гц)" }  };
     public Axis[] YAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Амплитуда" }  };
 
+    public ISeries[] SeriesPower { get; set; }
     
+    public Axis[] XAxesFrequencies { get; set; }
+    
+    public Axis[] YAxesFrequencies { get; set; }
     
     public VoiceTrackerViewModel(DevicesEnumerator? devicesEnumerator = null) //Конструктор
     {
-        SeriesMagnitudes = new ISeries[]
-        {
-            new LineSeries<float>
-            {
-                Values = Magnitudes,
-                Name = "Амплитуда",
-                Stroke = new SolidColorPaint(SKColors.LightSkyBlue, 2),
-                GeometryStroke = null,  
-                GeometryFill = null,    
-                GeometrySize = 0,
-            }
-        };
-
-        SeriesFrequences = new ISeries[]
-        {
-            new LineSeries<float>
-            {
-                Values = Frequences,
-                Name = "Частота",
-                Stroke = new SolidColorPaint(SKColors.LightSkyBlue, 2),
-                GeometryStroke = null,  
-                GeometryFill = null,    
-                GeometrySize = 0,
-            }
-        };
-        
-        MySeries.Add(new LineSeries<float>
-        {
-            Values = new ObservableCollection<float>(),
-            GeometrySize = 0,
-            LineSmoothness = 0
-        });
+        GraphsInit();
         
         _devicesEnumerator = devicesEnumerator ?? Locator.Current.GetService<DevicesEnumerator>()!;
 
@@ -177,9 +139,66 @@ public class VoiceTrackerViewModel : ViewModelBase
         });
     }
 
-    private void TimerOnTick(object? sender, EventArgs e)
+    private void GraphsInit()
     {
+        //настройка спектрограммы
+        SeriesMagnitudes = new ISeries[]
+        {
+            new LineSeries<float>
+            {
+                Values = Magnitudes,
+                Name = "Амплитуда",
+                Stroke = new SolidColorPaint(SKColors.LightSkyBlue, 2),
+                GeometryStroke = null,  
+                GeometryFill = null,    
+                GeometrySize = 0,
+            }
+        };
         
+        // Настройка осциллограммы
+        LiveCharts.Configure(config =>
+            config
+                .HasMap<AudioPoint>((point, index) => 
+                    new(point.TimeMs, point.Amplitude)
+                ));
+
+        SeriesPower = new ISeries[]
+        {
+            new LineSeries<AudioPoint>
+            {
+                Values = new ObservableCollection<AudioPoint>(),
+                Stroke = new SolidColorPaint(SKColors.LightSkyBlue, 2),
+                GeometryStroke = null,  
+                GeometryFill = null,    
+                GeometrySize = 0,
+                Fill = null,
+                XToolTipLabelFormatter = point => $"{point.Model.TimeMs:F2} ms: {point.Model.Amplitude:F2}",
+                DataPadding = new LvcPoint(0, 0)
+            }
+        };
+        
+        XAxesFrequencies = new[]
+        {
+            new Axis
+            {
+                Name = "Время (мс)",
+                MinLimit = 0,
+                NamePaint = new SolidColorPaint(SKColors.Black),
+                LabelsPaint = new SolidColorPaint(SKColors.Black)
+            }
+        };
+
+        YAxesFrequencies = new[]
+        {
+            new Axis
+            {
+                Name = "Амплитуда",
+                MinLimit = -1,
+                MaxLimit = 1,
+                NamePaint = new SolidColorPaint(SKColors.Black),
+                LabelsPaint = new SolidColorPaint(SKColors.Black)
+            }
+        };
     }
 
     private void VoiceTrackerInit() //Инициаизация трекера
@@ -190,6 +209,7 @@ public class VoiceTrackerViewModel : ViewModelBase
         
             
         _wasapiCapture = new WasapiCapture(inD, false, 100);
+        _wasapiCapture.WaveFormat = new WaveFormat(44100, 16, 1);
         _wasapiOut = new WasapiOut(outD, AudioClientShareMode.Shared, false, 100);
                 
         _wasapiCapture.DataAvailable += OnDataAvailable;
@@ -230,9 +250,11 @@ public class VoiceTrackerViewModel : ViewModelBase
         VolumeGaining(sender, e);
         _bufferedWaveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded); //Добавление данных для мониторинга микрофона
         
-        
         //fft
         FFTSeriesGaining(sender, e);
+        
+        //осциллограмма
+        OscillogrammGaining(sender, e);
     }
 
     private void VolumeGaining(object sender, WaveInEventArgs e)
@@ -269,7 +291,6 @@ public class VoiceTrackerViewModel : ViewModelBase
         }
         
         Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(max*100)))); //Отображение значение дБ в прогрессбаре
-        
     }
 
     private void FFTSeriesGaining(object sender, WaveInEventArgs e)
@@ -312,34 +333,37 @@ public class VoiceTrackerViewModel : ViewModelBase
             magnitudes[i] = (float)Math.Sqrt(fftBuffer[i].X * fftBuffer[i].X + fftBuffer[i].Y * fftBuffer[i].Y);
         }
         
-        // Получение децибел
-        // Конвертация byte[] -> float[] (нормализация)
-        var samples = new float[e.BytesRecorded / 2];
-        for (int i = 0; i < samples.Length; i++)
-        {
-            short sample = (short)(e.Buffer[i * 2 + 1] << 8 | e.Buffer[i * 2]);
-            samples[i] = sample / 32768f; // [-1, 1]
-        }
-
-        // Усреднение амплитуд за 10 мс
-        int samplesPerPoint = 44100 * 10 / 1000;
-        var averaged = samples
-            .Select((x, i) => new { Index = i / samplesPerPoint, Value = Math.Abs(x) })
-            .GroupBy(x => x.Index)
-            .Select(g => g.Average(x => x.Value))
-            .ToArray();
-
-        // Обновление данных на UI-потоке
-        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-        {
-            var lineSeries = (LineSeries<float>)MySeries[0];
-            lineSeries.Values = new ObservableCollection<float>(averaged);
-        });
-        
-        
         //Передача в график необходимых значений
         SeriesMagnitudes.First().Values = magnitudes;
-        //SeriesFrequences.Last().Values = null;
+    }
+    
+    private void OscillogrammGaining(object sender, WaveInEventArgs e)
+    {
+        lock (_syncLock)
+        {
+            _tempBuffer.Clear();
+            int samplesPerWindow = 44100 * 10 / 1000; // 441 сэмпл для 44.1 кГц (произведение частоты дискретизации и размера окна (10 мс))
+
+            for (int i = 0; i < e.BytesRecorded; i += 2)
+            {
+                short sample = (short)((e.Buffer[i + 1] << 8) | e.Buffer[i]);
+                float amplitude = sample / 32768f;
+                double timeMs = _tempBuffer.Count * (10 / (double)samplesPerWindow);
+
+                _tempBuffer.Add(new AudioPoint { TimeMs = timeMs, Amplitude = amplitude });
+
+                if (_tempBuffer.Count >= samplesPerWindow) break; // Ограничиваем буфер
+            }
+
+            // Полная перезапись данных в UI-потоке
+            Dispatcher.UIThread.Post(() =>
+            {
+                var series = (ObservableCollection<AudioPoint>)SeriesPower[0].Values!;
+                series.Clear();
+                foreach (var point in _tempBuffer)
+                    series.Add(point);
+            });
+        }
     }
     
     private void ApplyHannWindow(float[] data, int frameSize)
@@ -354,11 +378,5 @@ public class VoiceTrackerViewModel : ViewModelBase
     private void RefreshProgressBar(float percentage)
     {
         Volume = percentage;
-    }
-
-    private void UpdateCartesianChart(ObservableCollection<float> data)
-    {
-        _magnitudes.Clear();
-        _magnitudes = data;
     }
 }

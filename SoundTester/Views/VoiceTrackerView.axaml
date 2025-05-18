@@ -32,16 +32,25 @@
 			</StackPanel>
 		</Border>
 		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
-			<lvc:CartesianChart
-				Series="{Binding SeriesMagnitudes}"
-				XAxes="{Binding XAxisMagnitudes}"
-				YAxes="{Binding YAxisMagnitudes}"
-				Height="200" ZoomMode="Both" />
+			<StackPanel>
+				<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="16" Text="Спектрограмма"/>
+				<lvc:CartesianChart
+					Series="{Binding SeriesMagnitudes}"
+					XAxes="{Binding XAxisMagnitudes}"
+					YAxes="{Binding YAxisMagnitudes}"
+					Height="200" ZoomMode="X" />
+			</StackPanel>
 		</Border>
+		
 		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
-			<lvc:CartesianChart
-				Series="{Binding MySeries}"
-				Height="200" ZoomMode="Both" />
+			<StackPanel>
+				<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="16" Text="Осциллограмма"/>
+				<lvc:CartesianChart
+					Series="{Binding SeriesPower}"
+					Height="200" ZoomMode="X" 
+					XAxes="{Binding XAxesFrequencies}"
+					YAxes="{Binding YAxesFrequencies}"/>
+			</StackPanel>
 		</Border>
 	</StackPanel>
 
