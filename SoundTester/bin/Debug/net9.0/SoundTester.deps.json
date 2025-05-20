@@ -14,7 +14,6 @@
           "Avalonia.Fonts.Inter": "11.2.1",
           "Avalonia.ReactiveUI": "11.2.1",
           "Avalonia.Themes.Fluent": "11.2.1",
-          "FftSharp": "2.2.0",
           "LiveChartsCore.SkiaSharpView.Avalonia": "2.0.0-rc5.4",
           "Microsoft.Extensions.DependencyInjection": "9.0.4",
           "NAudio": "2.2.1",
@@ -284,14 +283,6 @@
           "lib/net8.0/DynamicData.dll": {
             "assemblyVersion": "8.4.0.0",
             "fileVersion": "8.4.1.20756"
-          }
-        }
-      },
-      "FftSharp/2.2.0": {
-        "runtime": {
-          "lib/net8.0/FftSharp.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.0"
           }
         }
       },
@@ -774,13 +765,6 @@
       "sha512": "sha512-Mn1+fU/jqxgONEJq8KLQPGWEi7g/hUVTbjZyn4QM0sWWDAVOHPO9WjXWORSykwdfg/6S3GM15qsfz+2EvO+QAQ==",
       "path": "dynamicdata/8.4.1",
       "hashPath": "dynamicdata.8.4.1.nupkg.sha512"
-    },
-    "FftSharp/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-TMdujVhp5qPCo8qABBxWJAS+sUFHR7XBX1U/v9l9vDosx8CqKWTttW4fpetroTGrqOfq/jRBRi8zthpoe7a+Qg==",
-      "path": "fftsharp/2.2.0",
-      "hashPath": "fftsharp.2.2.0.nupkg.sha512"
     },
     "HarfBuzzSharp/7.3.0.3": {
       "type": "package",

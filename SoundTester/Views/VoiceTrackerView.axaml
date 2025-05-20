@@ -7,51 +7,64 @@
 			mc:Ignorable="d"
 			x:Class="SoundTester.Views.VoiceTrackerView"
 			x:DataType="vm:VoiceTrackerViewModel">
-	<StackPanel Spacing="10" Margin="10">
-		<TextBlock TextWrapping="WrapWithOverflow" Text="Для произведения проверки микрофона выберите необходимое устройство из списка доступных устройств и нажмите на кнопку &#x22;Начать проверку&#x22;. Вы услышите звук, передающийся на микрофон через устройство воспроизведения, которое выбрано по-умолчанию в вашей системе."/>
-		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
-			<StackPanel Spacing="10" Margin="5">
-				<StackPanel Spacing="10">
-					<TextBlock Text="Доступные устройства:" />
-					<ComboBox ItemsSource="{Binding Devices}"
-							SelectedItem="{Binding SelectedDevice}"
-							SelectedIndex="{Binding SelectedDeviceIndex}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding }" />
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-
-				<TextBlock Text="{Binding SelectedDevice,StringFormat='{}Выбран микрофон: {0}'}" />
-
-				<ProgressBar Minimum="0" Maximum="1" Value="{Binding Volume}" />
-
-				<Button Content="{Binding RecButtonContent}" Command="{Binding RecordCommand}" IsEnabled="{Binding IsEnabled}" />
-			</StackPanel>
-		</Border>
-		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
-			<StackPanel>
-				<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="16" Text="Спектрограмма"/>
-				<lvc:CartesianChart
-					Series="{Binding SeriesMagnitudes}"
-					XAxes="{Binding XAxisMagnitudes}"
-					YAxes="{Binding YAxisMagnitudes}"
-					Height="200" ZoomMode="X" />
-			</StackPanel>
-		</Border>
+	<Grid RowDefinitions="Auto,*" Margin="10">
+		<StackPanel Spacing="10" Margin="10">
+			<TextBlock TextWrapping="WrapWithOverflow" Text="Для произведения проверки микрофона выберите необходимое устройство из списка доступных устройств и нажмите на кнопку &#x22;Начать проверку&#x22;. Вы услышите звук, передающийся на микрофон через устройство воспроизведения, которое выбрано по-умолчанию в вашей системе."/>
+            		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
+            			<StackPanel Spacing="10" Margin="5">
+            				<StackPanel Spacing="10">
+            					<TextBlock Text="Доступные устройства:" />
+            					<ComboBox ItemsSource="{Binding Devices}"
+            							SelectedItem="{Binding SelectedDevice}"
+            							SelectedIndex="{Binding SelectedDeviceIndex}">
+            						<ComboBox.ItemTemplate>
+            							<DataTemplate>
+            								<TextBlock Text="{Binding }" />
+            							</DataTemplate>
+            						</ComboBox.ItemTemplate>
+            					</ComboBox>
+            				</StackPanel>
+            
+            				<TextBlock Text="{Binding SelectedDevice,StringFormat='{}Выбран микрофон: {0}'}" />
+            
+            				<ProgressBar Minimum="0" Maximum="1" Value="{Binding Volume}" />
+            
+            				<Button Content="{Binding RecButtonContent}" Command="{Binding RecordCommand}" IsEnabled="{Binding IsEnabled}" />
+            			</StackPanel>
+            		</Border>
+		</StackPanel>
 		
-		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
-			<StackPanel>
-				<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="16" Text="Осциллограмма"/>
-				<lvc:CartesianChart
-					Series="{Binding SeriesPower}"
-					Height="200" ZoomMode="X" 
-					XAxes="{Binding XAxesFrequencies}"
-					YAxes="{Binding YAxesFrequencies}"/>
-			</StackPanel>
-		</Border>
-	</StackPanel>
-
+		<ScrollViewer Grid.Row="1">
+			<Grid RowDefinitions="*,*">
+				<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
+					<Grid RowDefinitions="Auto, *, Auto">
+						<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="18" Text="Спектрограмма"/>
+						<lvc:CartesianChart
+							Grid.Row="1" Series="{Binding SeriesMagnitudes}"
+							XAxes="{Binding XAxisMagnitudes}"
+							YAxes="{Binding YAxisMagnitudes}"
+							 ZoomMode="Both" MinHeight="200"/>
+						<StackPanel Grid.Row="2" Margin="5" Spacing="">
+							<CheckBox
+								Content="Отображать верхний порог шумов" IsChecked="{Binding IsCheckedCeiling}"/>
+							<CheckBox
+								Content="Отображать нижний порог шумов" IsChecked="{Binding IsCheckedFloor}"/>
+						</StackPanel>
+					</Grid>
+				</Border>
+		
+				<Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10" >
+					<Grid RowDefinitions="Auto, *">
+						<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="18" Text="Осциллограмма"/>
+						<lvc:CartesianChart
+							Grid.Row="1" MinHeight="200"
+							Series="{Binding SeriesPower}"
+							ZoomMode="X" 
+							XAxes="{Binding XAxesFrequencies}"
+							YAxes="{Binding YAxesFrequencies}"/>
+					</Grid>
+				</Border>
+			</Grid>
+		</ScrollViewer>
+	</Grid>
 </UserControl>

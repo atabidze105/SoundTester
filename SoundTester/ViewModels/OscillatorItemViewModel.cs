@@ -124,7 +124,7 @@ public class OscillatorItemViewModel : ViewModelBase //Осциллятор  (г
         set => this.RaiseAndSetIfChanged(ref _groupKey, value);
     }
 
-    private void WaveOutInit(string audioDevice) //Инициализация осциллятора
+    private void WasapiOutInit(string audioDevice) //Инициализация осциллятора
     {
         var en = new MMDeviceEnumerator(); //костыль
         var outD = en.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).Where(x => x.FriendlyName == audioDevice).FirstOrDefault();
@@ -140,6 +140,8 @@ public class OscillatorItemViewModel : ViewModelBase //Осциллятор  (г
 
         SampleProvider = SignalGenerator1.ToMono();
         WaveOut.Init(SampleProvider);
+        
+        en.Dispose();
     }
 
     public OscillatorItemViewModel() //Конструктор
@@ -150,9 +152,9 @@ public class OscillatorItemViewModel : ViewModelBase //Осциллятор  (г
     {
         ItemName = audioDevice;
         GroupKey = KeyGen();
+        WasapiOutInit(audioDevice);
 
         this.WhenAnyValue(
-                x => x.Frequency,
                 x => x.Sin,
                 x => x.Square,
                 x => x.Sawtooth,
@@ -160,8 +162,13 @@ public class OscillatorItemViewModel : ViewModelBase //Осциллятор  (г
                 x => x.Noise)
             .Subscribe(x =>
             {
-                IsPlaying = false;
-                WaveOutInit(audioDevice);
+                SignalGenerator1.Type = SGType;
+            });
+        this.WhenAnyValue(
+                x => x.Frequency)
+            .Subscribe(x =>
+            {
+                SignalGenerator1.Frequency = Frequency;
             });
     }
 

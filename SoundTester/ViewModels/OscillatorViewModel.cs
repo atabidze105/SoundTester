@@ -165,22 +165,6 @@ public class OscillatorViewModel : ViewModelBase //Менеджер осцилл
             
             OscillatorItemViewModel oscillatorItem = new OscillatorItemViewModel(SelectedDevice);
             Items.Add(oscillatorItem);
-            
-            foreach (var ite in Items)
-            {
-                ite.WhenAnyValue(
-                    x => x.Frequency, 
-                    x => x.Sin,
-                    x => x.Square,
-                    x => x.Triangle,
-                    x => x.Sawtooth,
-                    x => x.Noise).Subscribe(x =>
-                {
-                    ite.WaveOut?.Stop();
-                    ite.IsPlaying = false;
-                    PlayButtonText = "Начать прослушивание";
-                });
-            }
         }
         
     }

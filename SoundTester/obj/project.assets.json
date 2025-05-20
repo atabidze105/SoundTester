@@ -371,19 +371,6 @@
           }
         }
       },
-      "FftSharp/2.2.0": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0/FftSharp.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/FftSharp.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "HarfBuzzSharp/7.3.0.3": {
         "type": "package",
         "dependencies": {
@@ -1458,23 +1445,6 @@
         "logo.png"
       ]
     },
-    "FftSharp/2.2.0": {
-      "sha512": "TMdujVhp5qPCo8qABBxWJAS+sUFHR7XBX1U/v9l9vDosx8CqKWTttW4fpetroTGrqOfq/jRBRi8zthpoe7a+Qg==",
-      "type": "package",
-      "path": "fftsharp/2.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "fftsharp.2.2.0.nupkg.sha512",
-        "fftsharp.nuspec",
-        "icon.png",
-        "lib/net8.0/FftSharp.dll",
-        "lib/net8.0/FftSharp.xml",
-        "lib/netstandard2.0/FftSharp.dll",
-        "lib/netstandard2.0/FftSharp.xml"
-      ]
-    },
     "HarfBuzzSharp/7.3.0.3": {
       "sha512": "Hq+5+gx10coOvuRgB13KBwiWxJq1QeYuhtVLbA01ZCWaugOnolUahF44KvrQTUUHDNk/C7HB6SMaebsZeOdhgg==",
       "type": "package",
@@ -2527,7 +2497,6 @@
       "Avalonia.Fonts.Inter >= 11.2.1",
       "Avalonia.ReactiveUI >= 11.2.1",
       "Avalonia.Themes.Fluent >= 11.2.1",
-      "FftSharp >= 2.2.0",
       "LiveChartsCore.SkiaSharpView.Avalonia >= 2.0.0-rc5.4",
       "Microsoft.Extensions.DependencyInjection >= 9.0.4",
       "NAudio >= 2.2.1",
@@ -2602,10 +2571,6 @@
           "Avalonia.Themes.Fluent": {
             "target": "Package",
             "version": "[11.2.1, )"
-          },
-          "FftSharp": {
-            "target": "Package",
-            "version": "[2.2.0, )"
           },
           "LiveChartsCore.SkiaSharpView.Avalonia": {
             "target": "Package",

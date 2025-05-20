@@ -30,6 +30,8 @@ public class VoiceTrackerViewModel : ViewModelBase
     private float _volume;
     private bool _isMonitoring = false;
     private bool _isEnabled = false;
+    private bool _isCheckedCeiling = false;
+    private bool _isCheckedFloor = false;
     private WasapiCapture _wasapiCapture;
     private WasapiOut _wasapiOut;
     private BufferedWaveProvider _bufferedWaveProvider;
@@ -41,7 +43,6 @@ public class VoiceTrackerViewModel : ViewModelBase
     private readonly List<AudioPoint> _tempBuffer = new(); // Временный буфер
     private readonly object _syncLock = new(); //чтобы одновременно не происходили чтение и чистка/запись в _tempBuffer
 
-    
 
     public string SelectedDevice
     {
@@ -73,6 +74,18 @@ public class VoiceTrackerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _isEnabled, value);
     }
 
+    public bool IsCheckedCeiling
+    {
+        get => _isCheckedCeiling;
+        set => this.RaiseAndSetIfChanged(ref _isCheckedCeiling, value);
+    }
+
+    public bool IsCheckedFloor
+    {
+        get => _isCheckedFloor;
+        set => this.RaiseAndSetIfChanged(ref _isCheckedFloor, value);
+    }
+
     public string RecButtonContent
     {
         get => _recButtonContent;
@@ -94,7 +107,7 @@ public class VoiceTrackerViewModel : ViewModelBase
     }
     
     public Axis[] XAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Частота (Гц)" }  };
-    public Axis[] YAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Амплитуда" }  };
+    public Axis[] YAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Амплитуда", MinLimit = 0, MaxLimit = 0.01 }  };
 
     public ISeries[] SeriesPower { get; set; }
     
@@ -137,6 +150,16 @@ public class VoiceTrackerViewModel : ViewModelBase
                 VoiceTrackerInit();
             }
         });
+
+        this.WhenAnyValue(x => x.IsCheckedCeiling).Subscribe(x =>
+        {
+            SeriesMagnitudes.ElementAt(1).IsVisible = IsCheckedCeiling;
+        });
+        
+        this.WhenAnyValue(x => x.IsCheckedFloor).Subscribe(x =>
+        {
+            SeriesMagnitudes.ElementAt(2).IsVisible = IsCheckedFloor;
+        });
     }
 
     private void GraphsInit()
@@ -152,6 +175,24 @@ public class VoiceTrackerViewModel : ViewModelBase
                 GeometryStroke = null,  
                 GeometryFill = null,    
                 GeometrySize = 0,
+            },
+            new LineSeries<float>
+            {
+                Name = "Верхний порог шумов",
+                Stroke = new SolidColorPaint(SKColors.IndianRed, 2),
+                GeometryStroke = null,  
+                GeometryFill = null,    
+                GeometrySize = 0,
+                Fill = null
+            },
+            new LineSeries<float>
+            {
+                Name = "Нижний порог шумов",
+                Stroke = new SolidColorPaint(SKColors.LightGreen, 2),
+                GeometryStroke = null,  
+                GeometryFill = null,    
+                GeometrySize = 0,
+                Fill = null
             }
         };
         
@@ -183,8 +224,7 @@ public class VoiceTrackerViewModel : ViewModelBase
             {
                 Name = "Время (мс)",
                 MinLimit = 0,
-                NamePaint = new SolidColorPaint(SKColors.Black),
-                LabelsPaint = new SolidColorPaint(SKColors.Black)
+                MaxLimit = 10
             }
         };
 
@@ -194,9 +234,7 @@ public class VoiceTrackerViewModel : ViewModelBase
             {
                 Name = "Амплитуда",
                 MinLimit = -1,
-                MaxLimit = 1,
-                NamePaint = new SolidColorPaint(SKColors.Black),
-                LabelsPaint = new SolidColorPaint(SKColors.Black)
+                MaxLimit = 1
             }
         };
     }
@@ -332,9 +370,21 @@ public class VoiceTrackerViewModel : ViewModelBase
         {
             magnitudes[i] = (float)Math.Sqrt(fftBuffer[i].X * fftBuffer[i].X + fftBuffer[i].Y * fftBuffer[i].Y);
         }
+
+        //Нахождение верхнего и нижнего порогов шума
+        
+        float[] magnitudesChanged = new float[magnitudes.Length]; //Массив для сортировки всех значений
+        
+        Array.Copy(magnitudes, magnitudesChanged, magnitudes.Length);//Перенос и сортировка значений
+        Array.Sort(magnitudesChanged);
+        
+        float noiseCeiling = magnitudesChanged[(int)(magnitudesChanged.Length * 0.93f)]; //93 перцентиль от всех сортированных значений, 7% наивысших частот не попадают
+        float noiseFloor = magnitudesChanged.Skip(magnitudesChanged.Length * 3 / 4).Min(); //Поиск минимального значения в последних 25% сортированных значений
         
         //Передача в график необходимых значений
-        SeriesMagnitudes.First().Values = magnitudes;
+        SeriesMagnitudes.ElementAt(0).Values = magnitudes;
+        SeriesMagnitudes.ElementAt(1).Values = Enumerable.Repeat(noiseCeiling, magnitudes.Length);
+        SeriesMagnitudes.ElementAt(2).Values = Enumerable.Repeat(noiseFloor, magnitudes.Length);
     }
     
     private void OscillogrammGaining(object sender, WaveInEventArgs e)

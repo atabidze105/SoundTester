@@ -243,4 +243,3 @@ C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\LiveChart
 C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.dll
 C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
 C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\SkiaSharp.HarfBuzz.dll
-C:\Users\etoch\Desktop\diplom\SoundTester\SoundTester\bin\Debug\net9.0\FftSharp.dll

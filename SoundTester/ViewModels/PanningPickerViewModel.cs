@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Avalonia.Threading;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
@@ -28,9 +29,11 @@ public class PanningPickerViewModel : ViewModelBase //Тестер панора�
         Frequency = 440,
         Type = SignalGeneratorType.Sin
     };
+
     private ISampleProvider _sampleProvider;
     
     private DevicesEnumerator _devicesEnumerator;
+    private PanningSampleProvider _panning;
 
     public string PlayButtonContent
     {
@@ -87,6 +90,9 @@ public class PanningPickerViewModel : ViewModelBase //Тестер панора�
         
         PlayCommand = ReactiveCommand.Create( () => Play());
         
+        _sampleProvider = _signalGenerator.ToMono();
+        _panning = new PanningSampleProvider(_sampleProvider);
+        
         this.WhenAnyValue(x => x.Devices, x => x.SelectedDevice)
             .WhereNotNull()
             .Subscribe(x =>
@@ -95,7 +101,7 @@ public class PanningPickerViewModel : ViewModelBase //Тестер панора�
                 IsEnabled = SelectedIndex == -1 || Devices.Count == 0 ? false : true;
             });
 
-        this.WhenAnyValue(x => x.PanningValue, x => x.SelectedIndex).Subscribe(x =>
+        this.WhenAnyValue( x => x.SelectedIndex).Subscribe(x =>
         {
             if (IsPlaying)
             {
@@ -108,7 +114,16 @@ public class PanningPickerViewModel : ViewModelBase //Тестер панора�
                 PanningAudioInit();
             }
         });
+        
+        this.WhenAnyValue(x => x.PanningValue).Subscribe(x =>
+        {
+            if (IsPlaying)
+            {
+                _panning.Pan = PanningValue;
+            }
+        });
     }
+
     
     private void Play() //Запуск/остановка тестера
     {
@@ -139,9 +154,8 @@ public class PanningPickerViewModel : ViewModelBase //Тестер панора�
         _wasapiOut = new WasapiOut(outD,AudioClientShareMode.Shared, false, 50); //Инициализация WasapiOut с помощью SelectedDevice не работает т.к. не удается корректно привести объект к интерфейсу IMMDevice
 
         _sampleProvider = _signalGenerator.ToMono();
-        PanningSampleProvider panning = new PanningSampleProvider(_sampleProvider);
-        panning.Pan = PanningValue;
-        _wasapiOut.Init(panning);
+        _panning.Pan = PanningValue;
+        _wasapiOut.Init(_panning);
         
         en.Dispose();
     }
