@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Windows.Input;
 using Avalonia.Threading;
 using DynamicData;
@@ -9,6 +10,7 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Avalonia;
 using LiveChartsCore.SkiaSharpView.Painting;
 using NAudio.CoreAudioApi;
 using NAudio.Dsp;
@@ -16,6 +18,8 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using ReactiveUI;
 using SkiaSharp;
+using SoundTester.Messages;
+using SoundTester.Views;
 using SoundTesting;
 using Splat;
 
@@ -24,10 +28,12 @@ namespace SoundTester.ViewModels;
 public class VoiceTrackerViewModel : ViewModelBase
 {
     private string _recButtonContent = "Начать проверку";
+    private string _progressbarColor = "RoyalBlue";
     private string _selectedDevice;
     private int _selectedDeviceIndex;
     private ObservableCollection<string> _devices;
     private float _volume;
+    private float _dbfs;
     private bool _isMonitoring = false;
     private bool _isEnabled = false;
     private bool _isCheckedCeiling = false;
@@ -42,6 +48,7 @@ public class VoiceTrackerViewModel : ViewModelBase
     
     private readonly List<AudioPoint> _tempBuffer = new(); // Временный буфер
     private readonly object _syncLock = new(); //чтобы одновременно не происходили чтение и чистка/запись в _tempBuffer
+    
 
 
     public string SelectedDevice
@@ -68,6 +75,12 @@ public class VoiceTrackerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _volume, value);
     }
 
+    public float DBFS
+    {
+        get => _dbfs;
+        set => this.RaiseAndSetIfChanged(ref _dbfs, value);
+    }
+
     public bool IsEnabled
     {
         get => _isEnabled;
@@ -92,7 +105,17 @@ public class VoiceTrackerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _recButtonContent, value);
     }
 
+    public string ProgressbarColor
+    {
+        get => _progressbarColor;
+        set => this.RaiseAndSetIfChanged(ref _progressbarColor, value);
+    }
+
     public ICommand RecordCommand { get; }
+    
+    public ReactiveCommand<Unit, Unit> SaveSpectrogramCommand { get; }
+    
+    public ReactiveCommand<Unit, Unit> SaveOscillogramCommand { get; }
 
     public IEnumerable<ISeries> SeriesMagnitudes
     {
@@ -106,8 +129,10 @@ public class VoiceTrackerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _magnitudes, value);
     }
     
-    public Axis[] XAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Частота (Гц)" }  };
-    public Axis[] YAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Амплитуда", MinLimit = 0, MaxLimit = 0.01 }  };
+    public Axis[] XAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Частота (Гц)", 
+        ShowSeparatorLines = true, SeparatorsPaint = new SolidColorPaint(SKColors.LightGray.WithAlpha(100), 1), SeparatorsAtCenter = true }   };
+    public Axis[] YAxisMagnitudes { get; set; } = new Axis[] { new Axis { Name = "Амплитуда", MinLimit = 0, MaxLimit = 0.01, 
+        ShowSeparatorLines = true, SeparatorsPaint = new SolidColorPaint(SKColors.LightGray.WithAlpha(100), 1), SeparatorsAtCenter = true  }  };
 
     public ISeries[] SeriesPower { get; set; }
     
@@ -125,6 +150,18 @@ public class VoiceTrackerViewModel : ViewModelBase
         SelectedDevice = Devices.FirstOrDefault();
         
         RecordCommand = ReactiveCommand.Create(() => Record());
+        
+        SaveSpectrogramCommand = ReactiveCommand.Create(() =>
+        {
+            MessageBus.Current.SendMessage(new SaveSpectrogramMessage());
+        });
+        
+        SaveOscillogramCommand = ReactiveCommand.Create(() =>
+        {
+            MessageBus.Current.SendMessage(new SaveOscillogramMessage());
+        });
+        
+        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(-96))));
         
         this.WhenAnyValue(x => x.Devices, x => x.SelectedDevice)
             .WhereNotNull()
@@ -224,7 +261,10 @@ public class VoiceTrackerViewModel : ViewModelBase
             {
                 Name = "Время (мс)",
                 MinLimit = 0,
-                MaxLimit = 10
+                MaxLimit = 10,
+                ShowSeparatorLines = true, 
+                SeparatorsPaint = new SolidColorPaint(SKColors.LightGray.WithAlpha(100), 1),
+                SeparatorsAtCenter = true
             }
         };
 
@@ -234,7 +274,10 @@ public class VoiceTrackerViewModel : ViewModelBase
             {
                 Name = "Амплитуда",
                 MinLimit = -1,
-                MaxLimit = 1
+                MaxLimit = 1,
+                ShowSeparatorLines = true,
+                SeparatorsPaint = new SolidColorPaint(SKColors.LightGray.WithAlpha(100), 1),
+                SeparatorsAtCenter = true
             }
         };
     }
@@ -255,7 +298,7 @@ public class VoiceTrackerViewModel : ViewModelBase
         _bufferedWaveProvider = new BufferedWaveProvider(_wasapiCapture?.WaveFormat){ DiscardOnBufferOverflow = true };
         _wasapiOut.Init(_bufferedWaveProvider);
             
-        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(0))));
+        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(-96))));
         
         en.Dispose();
     }
@@ -266,7 +309,7 @@ public class VoiceTrackerViewModel : ViewModelBase
         {
             _wasapiCapture?.StopRecording();
             _wasapiOut.Stop();
-            Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(0))));
+            Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(-96))));
             
             RecButtonContent = "Начать проверку";
         }
@@ -327,8 +370,21 @@ public class VoiceTrackerViewModel : ViewModelBase
                 if (sample > max) max = sample;
             }
         }
+    
+        // Конвертация амплитуды в dBFS
+        float dBFS;
+        if (max > 0)
+        {
+            dBFS = 20 * MathF.Log10(max); // Формула перевода амплитуды в dBFS
+        }
+        else
+        {
+            dBFS = -96; // Минимальное значение для тишины (или другое очень низкое значение)
+        }
+
+        DBFS = dBFS;
         
-        Dispatcher.UIThread.InvokeAsync(new Action((() => RefreshProgressBar(max*100)))); //Отображение значение дБ в прогрессбаре
+        Dispatcher.UIThread.InvokeAsync(() => RefreshProgressBar(dBFS));
     }
 
     private void FFTSeriesGaining(object sender, WaveInEventArgs e)
@@ -428,5 +484,14 @@ public class VoiceTrackerViewModel : ViewModelBase
     private void RefreshProgressBar(float percentage)
     {
         Volume = percentage;
+        if ( percentage <= 0 && percentage > -6) 
+            ProgressbarColor = "Tomato";
+        else if (percentage <= -6 && percentage > -20)
+            ProgressbarColor = "Gold";
+        else if (percentage <= -20 && percentage > -40)
+            ProgressbarColor = "LightGreen";
+        else
+            ProgressbarColor = "RoyalBlue";
+            
     }
 }

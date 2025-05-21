@@ -25,9 +25,10 @@
             					</ComboBox>
             				</StackPanel>
             
-            				<TextBlock Text="{Binding SelectedDevice,StringFormat='{}Выбран микрофон: {0}'}" />
+            				<TextBlock Text="{Binding SelectedDevice,StringFormat='{}Выбран микрофон: {0}'}"  TextWrapping="WrapWithOverflow" />
+				            <TextBlock Text="{Binding DBFS, StringFormat='{}Текущий уровень громкости: {0:0.00} дБ.'}" TextWrapping="WrapWithOverflow"/> 
             
-            				<ProgressBar Minimum="0" Maximum="1" Value="{Binding Volume}" />
+            				<ProgressBar Minimum="-96" Maximum="0" Value="{Binding Volume}" Foreground="{Binding ProgressbarColor}"/>
             
             				<Button Content="{Binding RecButtonContent}" Command="{Binding RecordCommand}" IsEnabled="{Binding IsEnabled}" />
             			</StackPanel>
@@ -39,29 +40,41 @@
 				<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
 					<Grid RowDefinitions="Auto, *, Auto">
 						<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="18" Text="Спектрограмма"/>
-						<lvc:CartesianChart
+						<lvc:CartesianChart 
+							Name="SpectrogramChart"
 							Grid.Row="1" Series="{Binding SeriesMagnitudes}"
 							XAxes="{Binding XAxisMagnitudes}"
 							YAxes="{Binding YAxisMagnitudes}"
 							 ZoomMode="Both" MinHeight="200"/>
-						<StackPanel Grid.Row="2" Margin="5" Spacing="">
-							<CheckBox
-								Content="Отображать верхний порог шумов" IsChecked="{Binding IsCheckedCeiling}"/>
-							<CheckBox
-								Content="Отображать нижний порог шумов" IsChecked="{Binding IsCheckedFloor}"/>
+						<StackPanel Grid.Row="2" Margin="5" Spacing="5" Orientation="Horizontal">
+							<Button
+								Content="Сохранить как изображение" Command="{Binding SaveSpectrogramCommand}" />
+							<StackPanel>
+								<CheckBox
+									IsChecked="{Binding IsCheckedCeiling}">
+									<TextBlock Text="Отображать верхний порог шумов"  TextWrapping="WrapWithOverflow" />
+								</CheckBox>
+								<CheckBox
+									IsChecked="{Binding IsCheckedFloor}">
+									<TextBlock Text="Отображать нижний порог шумов"  TextWrapping="WrapWithOverflow" />
+								</CheckBox>
+							</StackPanel>
 						</StackPanel>
 					</Grid>
 				</Border>
 		
 				<Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10" >
-					<Grid RowDefinitions="Auto, *">
+					<Grid RowDefinitions="Auto, *, Auto">
 						<TextBlock HorizontalAlignment="Center" Margin="5" FontSize="18" Text="Осциллограмма"/>
 						<lvc:CartesianChart
+							Name="OscillogramChart"
 							Grid.Row="1" MinHeight="200"
 							Series="{Binding SeriesPower}"
 							ZoomMode="X" 
 							XAxes="{Binding XAxesFrequencies}"
 							YAxes="{Binding YAxesFrequencies}"/>
+						<Button
+							Grid.Row="2" Content="Сохранить как изображение" Command="{Binding SaveOscillogramCommand}"  Margin="5"/>
 					</Grid>
 				</Border>
 			</Grid>
