@@ -57,7 +57,7 @@ public partial class VoiceTrackerView : ReactiveUserControl<VoiceTrackerViewMode
         if (file != null)
         {
             var skChart = new SKCartesianChart(chart);
-            skChart.SaveImage(file.Path.AbsolutePath);
+            skChart.SaveImage(Uri.UnescapeDataString(file.Path.AbsolutePath));
         }
     }
 }

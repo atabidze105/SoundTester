@@ -168,7 +168,7 @@ public class VoiceTrackerViewModel : ViewModelBase
             .Subscribe(x =>
             {
                 Devices = _devicesEnumerator.DevicesUpdater.InputDevices;
-                IsEnabled = SelectedDeviceIndex == -1 || Devices.Count == 0 ? false : true;
+                IsEnabled = SelectedDeviceIndex == -1 || Devices.Count == 0 || _devicesEnumerator.DevicesUpdater.OutputDevices.Count == 0 ? false : true;
             });
         
         this.WhenAnyValue(x => x.SelectedDeviceIndex).Subscribe(x =>

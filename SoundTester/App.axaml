@@ -10,19 +10,15 @@
     </Application.DataTemplates>
   
     <Application.Styles>
+         
         <FluentTheme />
+        
+        <Style Selector="Window">
+            <Setter Property="Icon" Value="avares://SoundTester/Assets/icon.ico"/>
+        </Style>
+        
     </Application.Styles>
-    <Application.Resources>
-        <ResourceDictionary x:Key="Light">
-            <Color x:Key="BaseHigh">#ffffff</Color>
-            <Color x:Key="BaseMedium">#666666</Color>
-            <Color x:Key="BaseLow">#2b2d30</Color>
-        </ResourceDictionary>
+    
 
-        <ResourceDictionary x:Key="Dark">
-            <Color x:Key="BaseHigh">#2b2d30</Color>
-            <Color x:Key="BaseMedium">#888888</Color>
-            <Color x:Key="BaseLow">#ffffff</Color>
-        </ResourceDictionary>
-    </Application.Resources>
+             
 </Application>

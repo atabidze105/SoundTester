@@ -9,21 +9,21 @@
 	<Design.DataContext>
 		<vm:OscillatorItemViewModel />
 	</Design.DataContext>
-	<Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="{DynamicResource BaseHigh}">
+	<Border BorderBrush="Black" BorderThickness="1" Margin="5" Background="LightGray">
 		<StackPanel Margin="5">
 			<TextBlock Text="{Binding ItemName, StringFormat='{}Выбранное аудиоустройство: {0}'}" HorizontalAlignment="Center"
-						TextWrapping="WrapWithOverflow" />
+						TextWrapping="WrapWithOverflow"/>
 
 			<Slider Name="SliderFrequency" Orientation="Horizontal" Minimum="20" Maximum="20000" Value="{Binding Frequency}"
 					IsEnabled="{Binding !Noise}" />
-			<TextBlock Text="{Binding #SliderFrequency.Value, StringFormat='{}Частота: {0:0.00}'}" />
+			<TextBlock Text="{Binding #SliderFrequency.Value, StringFormat='{}Частота: {0:0.00}'}"/>
 
 			<StackPanel Spacing="10" Orientation="Horizontal" HorizontalAlignment="Center">
 				<RadioButton GroupName="{Binding GroupKey}" Content="SIN" IsChecked="{Binding Sin}" />
-				<RadioButton GroupName="{Binding GroupKey}" Content="SQR" IsChecked="{Binding Square}" />
+				<RadioButton GroupName="{Binding GroupKey}" Content="SQR" IsChecked="{Binding Square}"/>
 				<RadioButton GroupName="{Binding GroupKey}" Content="SAW" IsChecked="{Binding Sawtooth}" />
 				<RadioButton GroupName="{Binding GroupKey}" Content="TRI" IsChecked="{Binding Triangle}" />
-				<RadioButton GroupName="{Binding GroupKey}" Content="NOISE" IsChecked="{Binding Noise}" />
+				<RadioButton GroupName="{Binding GroupKey}" Content="NOISE" IsChecked="{Binding Noise}"/>
 			</StackPanel>
 		</StackPanel>
 	</Border>

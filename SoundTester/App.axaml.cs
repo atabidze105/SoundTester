@@ -21,8 +21,6 @@ public partial class App : Application
     {
         Bootstrapper.Configure();
         
-        Current.Resources.MergedDictionaries.Add((ResourceDictionary)Application.Current.Resources["Light"]);
-        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow

@@ -9,7 +9,6 @@
 		WindowStartupLocation="CenterScreen"
 		x:Class="SoundTester.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"
-		Icon="/Assets/avalonia-logo.ico"
 		Title="SoundTester">
 
 	<Design.DataContext>

@@ -9,7 +9,7 @@
 			x:DataType="vm:VoiceTrackerViewModel">
 	<Grid RowDefinitions="Auto,*" Margin="10">
 		<StackPanel Spacing="10" Margin="10">
-			<TextBlock TextWrapping="WrapWithOverflow" Text="Для произведения проверки микрофона выберите необходимое устройство из списка доступных устройств и нажмите на кнопку &#x22;Начать проверку&#x22;. Вы услышите звук, передающийся на микрофон через устройство воспроизведения, которое выбрано по-умолчанию в вашей системе."/>
+			<TextBlock TextWrapping="WrapWithOverflow" Text="Для произведения проверки микрофона выберите необходимое устройство из списка доступных устройств и нажмите на кнопку &#x22;Начать проверку&#x22;. Вы услышите звук, передающийся на микрофон через устройство воспроизведения, которое выбрано по умолчанию в вашей системе."/>
             		<Border BorderThickness="1" BorderBrush="Black" Margin="5" Padding="5" CornerRadius="10">
             			<StackPanel Spacing="10" Margin="5">
             				<StackPanel Spacing="10">
@@ -26,7 +26,7 @@
             				</StackPanel>
             
             				<TextBlock Text="{Binding SelectedDevice,StringFormat='{}Выбран микрофон: {0}'}"  TextWrapping="WrapWithOverflow" />
-				            <TextBlock Text="{Binding DBFS, StringFormat='{}Текущий уровень громкости: {0:0.00} дБ.'}" TextWrapping="WrapWithOverflow"/> 
+				            <TextBlock Text="{Binding DBFS, StringFormat='{}Текущий уровень сигнала: {0:0.00} dBFS.'}" TextWrapping="WrapWithOverflow"/> 
             
             				<ProgressBar Minimum="-96" Maximum="0" Value="{Binding Volume}" Foreground="{Binding ProgressbarColor}"/>
             
