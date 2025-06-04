@@ -1,4 +1,5 @@
 # SoundTester
+# <img height="150px" src="https://github.com/atabidze105/SoundTester/blob/reactive_ver/SoundTester/Assets/icon.ico"/> 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/atabidze105/SoundTester/blob/reactive_ver/LICENSE)
 ## Десктопное приложение для тестирования устройств ввода и вывода звука ПК.
 ## В фукционал приложения входит генерация звука и его воспроизведение на устройствах вывода звука, проверка баланса звука (смещение влево-вправо), монииторинг микрофона, отображение спектрограмм и осциллограмм, а аткже их сохранение в формате "png". При разработке использовалась библиотека [NAudio](https://github.com/naudio/NAudio)
